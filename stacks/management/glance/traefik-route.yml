@@ -1,0 +1,16 @@
+http:
+  routers:
+    glance-admin:
+      rule: "Host(`glance.home.example.com`)"
+      service: glance
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    glance:
+      loadBalancer:
+        servers:
+          - url: "http://<mgmt-ip>:8081"

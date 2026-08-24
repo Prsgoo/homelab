@@ -1,0 +1,6 @@
+default:
+  user: pve-exporter@pve
+  token_name: metrics
+  token_value: <your-token-uuid>
+  verify_ssl: false
+  privsep: false

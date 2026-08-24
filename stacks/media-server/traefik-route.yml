@@ -1,0 +1,31 @@
+http:
+  routers:
+    # User-facing - 443 (websecure)
+    jellyfin-tls:
+      rule: "Host(`jellyfin.home.example.com`)"
+      service: jellyfin
+      entryPoints:
+        - websecure
+      tls: {}
+      middlewares:
+        - streaming-shared
+
+    # Admin-only
+    jellystat-admin:
+      rule: "Host(`jellystat.home.example.com`)"
+      service: jellystat
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    jellyfin:
+      loadBalancer:
+        servers:
+          - url: "http://<media-server-ip>:8096"
+    jellystat:
+      loadBalancer:
+        servers:
+          - url: "http://<media-server-ip>:3000"

@@ -1,0 +1,49 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - /data/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - /data/prometheus:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=30d'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - /data/grafana:/var/lib/grafana
+    environment:
+      - GF_SERVER_ROOT_URL=https://grafana.home.example.com:<admin-port>
+      - GF_PANELS_DISABLE_SANITIZE_HTML=true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
+  pve-exporter:
+    image: prompve/prometheus-pve-exporter:latest
+    container_name: pve-exporter
+    restart: unless-stopped
+    volumes:
+      - /data/pve-exporter/pve.yml:/etc/prometheus/pve.yml:ro
+    ports:
+      - "9221:9221"
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    dns:
+      - <pihole-ip>
+    volumes:
+      - /data/uptime-kuma:/app/data
+    ports:
+      - "3001:3001"

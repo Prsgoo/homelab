@@ -1,0 +1,45 @@
+services:
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - 8096:8096
+    environment:
+      - PUID=1310
+      - PGID=1300
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/jellyfin:/config
+      - /media:/media:ro
+
+  jellystat:
+    image: cyfershepard/jellystat:latest
+    container_name: jellystat
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      - POSTGRES_USER=jellystat
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_IP=jellystat-db
+      - POSTGRES_PORT=5432
+      - JWT_SECRET=${JWT_SECRET}
+      - TZ=Europe/Madrid
+    depends_on:
+      - jellystat-db
+
+  jellystat-db:
+    image: postgres:15
+    container_name: jellystat-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=jellystat
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=jellystat
+    volumes:
+      - jellystat-db:/var/lib/postgresql/data
+    shm_size: 1gb
+
+volumes:
+  jellystat-db:

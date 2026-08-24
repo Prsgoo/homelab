@@ -1,0 +1,35 @@
+services:
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 8085:8080
+    environment:
+      - PUID=1307
+      - PGID=1300
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/sabnzbd:/config
+      - /usenet:/usenet
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 8080:8080
+    environment:
+      - PUID=1320
+      - PGID=1300
+      - TZ=Europe/Madrid
+      - WEBUI_PORT=8080
+    volumes:
+      - /data/qbittorrent:/config
+      - /torrents:/torrents

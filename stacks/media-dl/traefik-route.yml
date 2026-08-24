@@ -1,0 +1,29 @@
+http:
+  routers:
+    qbittorrent-admin:
+      rule: "Host(`qbittorrent.home.example.com`)"
+      service: qbittorrent
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    sabnzbd-admin:
+      rule: "Host(`sabnzbd.home.example.com`)"
+      service: sabnzbd
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    qbittorrent:
+      loadBalancer:
+        passHostHeader: false
+        servers:
+          - url: "http://<media-dl-ip>:8080"
+    sabnzbd:
+      loadBalancer:
+        servers:
+          - url: "http://<media-dl-ip>:8085"

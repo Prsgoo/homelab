@@ -1,0 +1,16 @@
+http:
+  routers:
+    pihole-admin:
+      rule: "Host(`pihole.home.example.com`)"
+      service: pihole
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    pihole:
+      loadBalancer:
+        servers:
+          - url: "http://<pihole-ip>"

@@ -1,0 +1,40 @@
+http:
+  routers:
+    grafana-admin:
+      rule: "Host(`grafana.home.example.com`)"
+      service: grafana
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    prometheus-admin:
+      rule: "Host(`prometheus.home.example.com`)"
+      service: prometheus
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    kuma-admin:
+      rule: "Host(`kuma.home.example.com`)"
+      service: kuma
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    grafana:
+      loadBalancer:
+        servers:
+          - url: "http://<monitoring-ip>:3000"
+    prometheus:
+      loadBalancer:
+        servers:
+          - url: "http://<monitoring-ip>:9090"
+    kuma:
+      loadBalancer:
+        servers:
+          - url: "http://<monitoring-ip>:3001"

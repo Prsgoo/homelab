@@ -1,0 +1,126 @@
+services:
+  ultrafeeder:
+    image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:telegraf
+    container_name: ultrafeeder
+    hostname: ultrafeeder
+    restart: unless-stopped
+    device_cgroup_rules:
+      - 'c 189:* rwm'
+    ports:
+      - 8080:80
+      - 9273-9274:9273-9274
+    environment:
+      - LOGLEVEL=error
+      - PROMETHEUS_ENABLE=true
+      - TZ=${FEEDER_TZ}
+      - READSB_DEVICE_TYPE=rtlsdr
+      - READSB_RTLSDR_DEVICE=${ADSB_SDR_SERIAL}
+      - READSB_RTLSDR_PPM=${ADSB_SDR_PPM}
+      - READSB_LAT=${FEEDER_LAT}
+      - READSB_LON=${FEEDER_LONG}
+      - READSB_ALT=${FEEDER_ALT_M}m
+      - READSB_RX_LOCATION_ACCURACY=2
+      - READSB_STATS_RANGE=true
+      - ULTRAFEEDER_CONFIG=
+          adsb,feed.adsb.fi,30004,beast_reduce_plus_out;
+          adsb,in.adsb.lol,30004,beast_reduce_plus_out;
+          adsb,feed.airplanes.live,30004,beast_reduce_plus_out;
+          adsb,feed.planespotters.net,30004,beast_reduce_plus_out;
+          adsb,feed.theairtraffic.com,30004,beast_reduce_plus_out;
+          adsb,data.avdelphi.com,24999,beast_reduce_plus_out;
+          adsb,skyfeed.hpradar.com,30004,beast_reduce_plus_out;
+          adsb,dati.flyitalyadsb.com,4905,beast_reduce_plus_out;
+          adsb,feed1.adsbexchange.com,30004,beast_reduce_plus_out;
+          mlat,feed.adsb.fi,31090;
+          mlat,in.adsb.lol,31090;
+          mlat,feed.airplanes.live,31090;
+          mlat,mlat.planespotters.net,31090;
+          mlat,feed.theairtraffic.com,31090;
+          mlat,skyfeed.hpradar.com,31090;
+          mlat,dati.flyitalyadsb.com,30100;
+          mlat,feed.adsbexchange.com,31090;
+          mlathub,piaware,30105,beast_in;
+      - UUID=${ULTRAFEEDER_UUID}
+      - MLAT_USER=${FEEDER_NAME}
+      - READSB_FORWARD_MLAT_SBS=true
+      - UPDATE_TAR1090=true
+      - TAR1090_DEFAULTCENTERLAT=${FEEDER_LAT}
+      - TAR1090_DEFAULTCENTERLON=${FEEDER_LONG}
+      - TAR1090_MESSAGERATEINTITLE=true
+      - TAR1090_PAGETITLE=${FEEDER_NAME}
+      - TAR1090_PLANECOUNTINTITLE=true
+      - TAR1090_ENABLE_AC_DB=true
+      - TAR1090_FLIGHTAWARELINKS=true
+      - HEYWHATSTHAT_PANORAMA_ID=${FEEDER_HEYWHATSTHAT_ID}
+      - HEYWHATSTHAT_ALTS=${FEEDER_HEYWHATSTHAT_ALTS}
+      - TAR1090_SITESHOW=true
+      - TAR1090_RANGE_OUTLINE_COLORED_BY_ALTITUDE=true
+      - TAR1090_RANGE_OUTLINE_WIDTH=2.0
+      - TAR1090_RANGERINGSDISTANCES=50,100,150,200
+      - TAR1090_RANGERINGSCOLORS='#1A237E','#0D47A1','#42A5F5','#64B5F6'
+      - TAR1090_USEROUTEAPI=true
+      - GRAPHS1090_DARKMODE=true
+    volumes:
+      - /data/globe_history:/var/globe_history
+      - /data/graphs1090:/var/lib/collectd
+      - /proc/diskstats:/proc/diskstats:ro
+      - /dev/bus/usb:/dev/bus/usb:rw
+    tmpfs:
+      - /run:exec,size=256M
+      - /tmp:size=128M
+      - /var/log:size=32M
+
+  piaware:
+    image: ghcr.io/sdr-enthusiasts/docker-piaware:latest
+    container_name: piaware
+    depends_on:
+      ultrafeeder:
+        condition: service_healthy
+        restart: true
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    environment:
+      - BEASTHOST=ultrafeeder
+      - TZ=${FEEDER_TZ}
+      - FEEDER_ID=${PIAWARE_FEEDER_ID}
+    tmpfs:
+      - /run:exec,size=64M
+      - /var/log
+
+  fr24:
+    image: ghcr.io/sdr-enthusiasts/docker-flightradar24:latest
+    container_name: fr24
+    depends_on:
+      ultrafeeder:
+        condition: service_healthy
+        restart: true
+    restart: unless-stopped
+    ports:
+      - 8754:8754
+    environment:
+      - BEASTHOST=ultrafeeder
+      - FR24KEY=${FR24_SHARING_KEY}
+      - FR24KEY_UAT=${FR24_SHARING_KEY_UAT}
+    tmpfs:
+      - /var/log
+
+  opensky:
+    image: ghcr.io/sdr-enthusiasts/docker-opensky-network:latest
+    container_name: opensky
+    depends_on:
+      ultrafeeder:
+        condition: service_healthy
+        restart: true
+    restart: unless-stopped
+    environment:
+      - TZ=${FEEDER_TZ}
+      - BEASTHOST=ultrafeeder
+      - LAT=${FEEDER_LAT}
+      - LONG=${FEEDER_LONG}
+      - ALT=${FEEDER_ALT_M}
+      - OPENSKY_USERNAME=${OPENSKY_USERNAME}
+      - OPENSKY_SERIAL=${OPENSKY_SERIAL}
+    tmpfs:
+      - /run:exec,size=64M
+      - /var/log

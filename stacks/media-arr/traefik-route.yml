@@ -1,0 +1,79 @@
+http:
+  routers:
+    # User-facing - 443 (websecure)
+    seerr-tls:
+      rule: "Host(`seerr.home.example.com`)"
+      service: seerr
+      entryPoints:
+        - websecure
+      tls: {}
+      middlewares:
+        - streaming-shared
+
+    # Admin-only
+    sonarr-admin:
+      rule: "Host(`sonarr.home.example.com`)"
+      service: sonarr
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    radarr-admin:
+      rule: "Host(`radarr.home.example.com`)"
+      service: radarr
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    prowlarr-admin:
+      rule: "Host(`prowlarr.home.example.com`)"
+      service: prowlarr
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    bazarr-admin:
+      rule: "Host(`bazarr.home.example.com`)"
+      service: bazarr
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    dispatcharr-admin:
+      rule: "Host(`dispatcharr.home.example.com`)"
+      service: dispatcharr
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    sonarr:
+      loadBalancer:
+        servers:
+          - url: "http://<media-arr-ip>:8989"
+    radarr:
+      loadBalancer:
+        servers:
+          - url: "http://<media-arr-ip>:7878"
+    prowlarr:
+      loadBalancer:
+        servers:
+          - url: "http://<media-arr-ip>:9696"
+    bazarr:
+      loadBalancer:
+        servers:
+          - url: "http://<media-arr-ip>:6767"
+    seerr:
+      loadBalancer:
+        servers:
+          - url: "http://<media-arr-ip>:5055"
+    dispatcharr:
+      loadBalancer:
+        servers:
+          - url: "http://<media-arr-ip>:9191"

@@ -1,0 +1,30 @@
+http:
+  routers:
+    actual-budget:
+      rule: "Host(`budget.home.example.com`)"
+      service: actual-budget
+      entryPoints:
+        - admin
+      middlewares:
+        - admin-only
+      tls: {}
+
+    mealie:
+      rule: "Host(`mealie.home.example.com`)"
+      service: mealie
+      entryPoints:
+        - admin
+      middlewares:
+        - admin-only
+      tls: {}
+
+  services:
+    actual-budget:
+      loadBalancer:
+        servers:
+          - url: "http://<personal-apps-ip>:5006"
+
+    mealie:
+      loadBalancer:
+        servers:
+          - url: "http://<personal-apps-ip>:9000"

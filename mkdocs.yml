@@ -1,0 +1,162 @@
+﻿site_name: Proxmox Homelab
+site_description: Step-by-step guides for a self-hosted Proxmox homelab - from bare metal through full service integration.
+site_url: https://homelab.prsgoo.com
+repo_url: https://github.com/Prsgoo/homelab
+repo_name: Prsgoo/homelab
+copyright: Copyright &copy; 2026 Prsgoo
+
+theme:
+  name: material
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
+
+plugins:
+  - search
+
+markdown_extensions:
+  - abbr
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.details
+  - pymdownx.snippets:
+      base_path: docs
+      auto_append:
+        - includes/abbreviations.md
+  - admonition
+  - tables
+  - attr_list
+  - def_list
+  - footnotes
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Architecture: architecture.md
+  - Guides:
+    - Overview: guides/index.md
+    - DNS (Pi-hole + Unbound): guides/pihole.md
+    - Container Manager (Komodo): guides/komodo.md
+    - Reverse Proxy (Traefik): guides/traefik.md
+    - Remote Access (Tailscale): guides/tailscale.md
+    - External Access (Cloudflare Tunnel): guides/cloudflare-tunnel.md
+    - Media Stack: guides/media-stack.md
+    - Monitoring: guides/monitoring.md
+    - IoT (Homebridge + Zigbee): guides/iot.md
+    - ADS-B (Ultrafeeder): guides/ultrafeeder.md
+    - Game Servers (Pterodactyl): guides/pterodactyl.md
+    - Actual Budget: guides/actual-budget.md
+    - Mealie: guides/mealie.md
+  - Reference:
+    - Overview: wiki/_master-index.md
+    - Infrastructure:
+      - Overview: wiki/infrastructure/_index.md
+      - Internal HTTPS: wiki/infrastructure/internal-https.md
+      - Komodo: wiki/infrastructure/komodo.md
+      - Tailscale: wiki/infrastructure/tailscale.md
+      - Monitoring: wiki/infrastructure/monitoring.md
+      - Cloudflare Tunnel: wiki/infrastructure/cloudflare-tunnel.md
+    - LXC Inventory:
+      - Overview: wiki/lxcs/_index.md
+      - All LXCs: wiki/lxcs/lxc-inventory.md
+      - management (CT 100): wiki/lxcs/management-lxc.md
+      - pihole (CT 101): wiki/lxcs/pihole.md
+      - ultrafeeder (CT 200): wiki/lxcs/ultrafeeder.md
+      - iot (CT 201): wiki/lxcs/iot.md
+      - monitoring (CT 202): wiki/lxcs/monitoring.md
+      - media-arr (CT 300): wiki/lxcs/media-arr.md
+      - media-server (CT 301): wiki/lxcs/media-server.md
+      - media-dl (CT 302): wiki/lxcs/media-dl.md
+      - game-panel (CT 400): wiki/lxcs/game-panel.md
+      - minecraft-wings (CT 401): wiki/lxcs/minecraft-wings.md
+      - personal-apps (CT 600): wiki/lxcs/personal-apps.md
+    - Services:
+      - Management:
+        - Overview: wiki/services/management/_index.md
+        - Komodo Core: wiki/services/management/komodo-core.md
+        - Traefik: wiki/services/management/traefik.md
+        - Glance: wiki/services/management/glance.md
+        - FileBrowser: wiki/services/management/filebrowser.md
+      - DNS:
+        - Overview: wiki/services/pihole/_index.md
+        - Pi-hole: wiki/services/pihole/pihole.md
+        - Unbound: wiki/services/pihole/unbound.md
+      - Media - Arr Stack:
+        - Overview: wiki/services/media-arr/_index.md
+        - Sonarr: wiki/services/media-arr/sonarr.md
+        - Radarr: wiki/services/media-arr/radarr.md
+        - Prowlarr: wiki/services/media-arr/prowlarr.md
+        - Bazarr: wiki/services/media-arr/bazarr.md
+        - Seerr: wiki/services/media-arr/seerr.md
+        - Dispatcharr: wiki/services/media-arr/dispatcharr.md
+        - Recyclarr: wiki/services/media-arr/recyclarr.md
+        - Unpackerr: wiki/services/media-arr/unpackerr.md
+        - FlareSolverr: wiki/services/media-arr/flaresolverr.md
+      - Media - Server:
+        - Overview: wiki/services/media-server/_index.md
+        - Jellyfin: wiki/services/media-server/jellyfin.md
+        - Jellystat: wiki/services/media-server/jellystat.md
+      - Media - Downloads:
+        - Overview: wiki/services/media-dl/_index.md
+        - qBittorrent: wiki/services/media-dl/qbittorrent.md
+        - SABnzbd: wiki/services/media-dl/sabnzbd.md
+      - Monitoring:
+        - Overview: wiki/services/monitoring/_index.md
+        - Prometheus: wiki/services/monitoring/prometheus.md
+        - Grafana: wiki/services/monitoring/grafana.md
+        - Uptime Kuma: wiki/services/monitoring/uptime-kuma.md
+        - pve-exporter: wiki/services/monitoring/pve-exporter.md
+      - IoT:
+        - Overview: wiki/services/iot/_index.md
+        - Homebridge: wiki/services/iot/homebridge.md
+        - Zigbee2MQTT: wiki/services/iot/zigbee2mqtt.md
+        - Mosquitto: wiki/services/iot/mosquitto.md
+      - ADS-B:
+        - Overview: wiki/services/ultrafeeder/_index.md
+        - Ultrafeeder: wiki/services/ultrafeeder/ultrafeeder.md
+      - Game Servers:
+        - Overview: wiki/services/game-panel/_index.md
+        - Pterodactyl Panel: wiki/services/game-panel/pterodactyl-panel.md
+        - Pterodactyl Wings: wiki/services/minecraft-wings/pterodactyl-wings.md
+      - Personal Apps:
+        - Overview: wiki/services/personal-apps/_index.md
+        - Actual Budget: wiki/services/personal-apps/actual-budget.md
+        - Mealie: wiki/services/personal-apps/mealie.md
+    - Standards:
+      - Overview: wiki/standards/_index.md
+      - Data Layout: wiki/standards/data-layout.md
+      - LXC idmap: wiki/standards/lxc-idmap.md
+      - User/Group Scheme: wiki/standards/user-group-scheme.md
+    - Storage:
+      - Overview: wiki/storage/_index.md
+      - Storage Layout: wiki/storage/storage-layout.md
+    - Operations:
+      - Overview: wiki/ops/_index.md
+      - Cheatsheet: wiki/ops/cheatsheet.md
+      - Disaster Recovery: wiki/ops/disaster-recovery.md

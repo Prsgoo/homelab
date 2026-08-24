@@ -1,0 +1,43 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: pve
+    metrics_path: /pve
+    params:
+      module: [default]
+      target: ['<proxmox-host-ip>']
+    static_configs:
+      - targets: ['pve-exporter:9221']
+
+  - job_name: node
+    static_configs:
+      - targets: ['<mgmt-ip>:9100']
+        labels: {instance: management}
+      - targets: ['<pihole-ip>:9100']
+        labels: {instance: pihole}
+      - targets: ['<ultrafeeder-ip>:9100']
+        labels: {instance: ultrafeeder}
+      - targets: ['<iot-ip>:9100']
+        labels: {instance: iot}
+      - targets: ['<media-arr-ip>:9100']
+        labels: {instance: media-arr}
+      - targets: ['<media-server-ip>:9100']
+        labels: {instance: media-server}
+      - targets: ['<media-dl-ip>:9100']
+        labels: {instance: media-dl}
+      - targets: ['<panel-ip>:9100']
+        labels: {instance: game-panel}
+      - targets: ['<wings-ip>:9100']
+        labels: {instance: minecraft-wings}
+      - targets: ['<monitoring-ip>:9100']
+        labels: {instance: monitoring}
+
+  - job_name: ultrafeeder
+    static_configs:
+      - targets: ['<ultrafeeder-ip>:9273', '<ultrafeeder-ip>:9274']

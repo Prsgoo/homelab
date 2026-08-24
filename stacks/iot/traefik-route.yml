@@ -1,0 +1,28 @@
+http:
+  routers:
+    zigbee-admin:
+      rule: "Host(`zigbee.home.example.com`)"
+      service: zigbee
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    homebridge-admin:
+      rule: "Host(`homebridge.home.example.com`)"
+      service: homebridge
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    zigbee:
+      loadBalancer:
+        servers:
+          - url: "http://<iot-ip>:8080"
+    homebridge:
+      loadBalancer:
+        servers:
+          - url: "http://<iot-ip>:8581"

@@ -1,0 +1,21 @@
+http:
+  routers:
+    traefik-admin:
+      rule: "Host(`traefik.home.example.com`)"
+      service: traefik-dashboard
+      entryPoints:
+        - admin
+      tls:
+        certResolver: cloudflare
+        domains:
+          - main: "home.example.com"
+            sans:
+              - "*.home.example.com"
+      middlewares:
+        - admin-only
+
+  services:
+    traefik-dashboard:
+      loadBalancer:
+        servers:
+          - url: "http://<mgmt-ip>:8080"

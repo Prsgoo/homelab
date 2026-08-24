@@ -1,0 +1,16 @@
+http:
+  routers:
+    komodo-admin:
+      rule: "Host(`komodo.home.example.com`)"
+      service: komodo
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    komodo:
+      loadBalancer:
+        servers:
+          - url: "http://<mgmt-ip>:9120"

@@ -1,0 +1,29 @@
+http:
+  middlewares:
+    # Admin devices only - Komodo, Pi-hole, FileBrowser, Glance, monitoring, etc.
+    admin-only:
+      ipAllowList:
+        sourceRange:
+          - "<admin-device-1-ts-ip>/32"   # your admin device
+          # add more admin device Tailscale IPs here
+          - "<monitoring-ip>/32"   # uptime-kuma CT 202 - server-side health checks
+
+    # Admin devices + tag:streaming - Jellyfin, Seerr
+    streaming-shared:
+      ipAllowList:
+        sourceRange:
+          - "<admin-device-1-ts-ip>/32"   # admin
+          # add more admin device IPs here
+          - "<streaming-device-ts-ip>/32"  # streaming device (e.g. Apple TV, TV box)
+          - "<monitoring-ip>/32"   # uptime-kuma CT 202 - server-side health checks
+
+    # Admin devices + tag:minecraft - game-panel, Wings
+    minecraft-shared:
+      ipAllowList:
+        sourceRange:
+          - "<admin-device-1-ts-ip>/32"   # admin
+          # add more admin device IPs here
+          - "<minecraft-player-1-ts-ip>/32"  # player 1
+          # add more player IPs here
+          - "<panel-ip>/32"    # game-panel CT 400 itself - backend server-to-server calls to Wings
+          - "<monitoring-ip>/32"   # uptime-kuma CT 202 - server-side health checks

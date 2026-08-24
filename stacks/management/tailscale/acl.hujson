@@ -1,0 +1,53 @@
+// NOTE: Tailscale ACLs use HuJSON (https://github.com/tailscale/hujson), a superset of JSON
+// that allows // comments and trailing commas. Paste this directly into tailscale.com/admin/acls.
+// Standard JSON validators will flag it as invalid - that is expected.
+//
+// Tailscale ACL - three-tier access model layered with per-service ipAllowList in Traefik.
+// See wiki/ops/traefik-port-split.md and wiki/infrastructure/tailscale.md for the full design.
+{
+    "tagOwners": {
+        "tag:admin":     ["autogroup:owner"],
+        "tag:streaming": ["autogroup:owner"],
+        "tag:minecraft": ["autogroup:owner"],
+    },
+
+    // Named aliases for individual devices, referenced by grants below.
+    "hosts": {
+        "pi-ultrafeeder": "<ultrafeeder-ts-ip>/32",
+    },
+
+    "grants": [
+        // tag:admin - full access to the whole tailnet and LAN subnet.
+        {"src": ["tag:admin"], "dst": ["100.64.0.0/10", "<your-ip-range>"], "ip": ["*"]},
+
+        // tag:minecraft - direct access to Wings (CT 401) for the actual game
+        // connection. game-panel itself is reached through Traefik instead
+        // (next grant), not directly.
+        {"src": ["tag:minecraft"], "dst": ["<wings-ts-ip>"], "ip": ["*"]},
+
+        // tag:admin, tag:streaming, tag:minecraft - reach Traefik on 80/443.
+        // Deliberately coarse here: which specific service each tag can actually
+        // reach (Jellyfin/Seerr vs game-panel) is enforced by Traefik's own
+        // ipAllowList middleware per router, since ACLs can't distinguish
+        // services sharing a port by Host header.
+        {"src": ["tag:admin", "tag:streaming", "tag:minecraft"], "dst": ["<mgmt-ip>"], "ip": ["tcp:80", "tcp:443"]},
+
+        // No catch-all grant for LAN/Traefik access - untagged devices get
+        // nothing there. DNS is the one deliberate exception: every device on
+        // the tailnet (tagged or not) needs to reach Pi-hole, since "Override
+        // local DNS" is a tailnet-wide setting, not per-device. Resolving a
+        // name doesn't grant access to anything - the destination is still
+        // gated by the grants above.
+        {"src": ["*"], "dst": ["<pihole-ts-ip>"], "ip": ["udp:53", "tcp:53"]},
+    ],
+
+    "ssh": [
+        // Allow all users to SSH into their own devices in check mode.
+        {
+            "action": "check",
+            "src":    ["autogroup:member"],
+            "dst":    ["autogroup:self"],
+            "users":  ["autogroup:nonroot", "root"],
+        },
+    ],
+}

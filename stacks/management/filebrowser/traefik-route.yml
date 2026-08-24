@@ -1,0 +1,16 @@
+http:
+  routers:
+    filebrowser-admin:
+      rule: "Host(`files.home.example.com`)"
+      service: filebrowser
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    filebrowser:
+      loadBalancer:
+        servers:
+          - url: "http://<mgmt-ip>:8082"

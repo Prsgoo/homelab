@@ -1,0 +1,12 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:latest
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+    volumes:
+      - /data/mealie:/app/data
+    environment:
+      - TZ=Europe/Madrid
+      - BASE_URL=https://mealie.home.example.com
+      - ALLOW_SIGNUP=false

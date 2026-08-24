@@ -1,0 +1,28 @@
+http:
+  routers:
+    game-panel-tls:
+      rule: "Host(`game-panel.home.example.com`)"
+      service: game-panel
+      entryPoints:
+        - websecure
+      tls: {}
+      middlewares:
+        - minecraft-shared
+    wings-tls:
+      rule: "Host(`wings.home.example.com`)"
+      service: wings
+      entryPoints:
+        - websecure
+      tls: {}
+      middlewares:
+        - minecraft-shared
+
+  services:
+    game-panel:
+      loadBalancer:
+        servers:
+          - url: "http://<panel-ip>"
+    wings:
+      loadBalancer:
+        servers:
+          - url: "http://<wings-ip>:8080"

@@ -1,0 +1,43 @@
+services:
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    container_name: mqtt
+    restart: unless-stopped
+    user: root
+    ports:
+      - 1883:1883
+      - 9002:9001
+    volumes:
+      - /data/mosquitto/config:/mosquitto/config:ro
+      - /data/mosquitto/data:/mosquitto/data
+      - /data/mosquitto/log:/mosquitto/log
+
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:latest
+    container_name: zigbee2mqtt
+    restart: unless-stopped
+    depends_on:
+      - mqtt
+    ports:
+      - 8080:8080
+    volumes:
+      - /data/zigbee2mqtt:/app/data
+      - /run/udev:/run/udev:ro
+    devices:
+      - /dev/ttyUSB0:/dev/ttyUSB0
+    environment:
+      - TZ=Europe/Madrid
+
+  homebridge:
+    image: homebridge/homebridge:ubuntu
+    container_name: homebridge
+    restart: unless-stopped
+    network_mode: host
+    depends_on:
+      - mqtt
+    volumes:
+      - /data/homebridge:/homebridge
+    environment:
+      - TZ=Europe/Madrid
+      - HOMEBRIDGE_CONFIG_UI=1
+      - HOMEBRIDGE_CONFIG_UI_PORT=8581

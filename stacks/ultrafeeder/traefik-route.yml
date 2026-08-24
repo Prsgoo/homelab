@@ -1,0 +1,40 @@
+http:
+  routers:
+    adsb-admin:
+      rule: "Host(`adsb.home.example.com`)"
+      service: adsb
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    piaware-admin:
+      rule: "Host(`piaware.home.example.com`)"
+      service: piaware
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+    fr24-admin:
+      rule: "Host(`fr24.home.example.com`)"
+      service: fr24
+      entryPoints:
+        - admin
+      tls: {}
+      middlewares:
+        - admin-only
+
+  services:
+    adsb:
+      loadBalancer:
+        servers:
+          - url: "http://<ultrafeeder-ip>:8080"
+    piaware:
+      loadBalancer:
+        servers:
+          - url: "http://<ultrafeeder-ip>:8081"
+    fr24:
+      loadBalancer:
+        servers:
+          - url: "http://<ultrafeeder-ip>:8754"

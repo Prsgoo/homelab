@@ -1,0 +1,15 @@
+services:
+  traefik:
+    image: traefik:v3
+    container_name: traefik
+    restart: unless-stopped
+    environment:
+      - CLOUDFLARE_DNS_API_TOKEN=${CLOUDFLARE_DNS_API_TOKEN}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+      - "${ADMIN_PORT}:${ADMIN_PORT}"  # set ADMIN_PORT in .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /data/config/management/traefik:/etc/traefik

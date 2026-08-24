@@ -1,0 +1,279 @@
+server:
+  port: 8080
+
+theme:
+  background-color: 240 13 14
+  primary-color: 51 33 68
+  negative-color: 358 100 68
+  contrast-multiplier: 1.2
+
+pages:
+  - name: Home
+    columns:
+      - size: small
+        widgets:
+          - type: calendar
+            first-day-of-week: monday
+
+          - type: weather
+            location: <your-city>, <your-country>
+            units: metric
+            hour-format: 24h
+
+          - type: rss
+            limit: 10
+            collapse-after: 3
+            cache: 6h
+            feeds:
+              - url: https://selfh.st/rss/
+                title: selfh.st
+                limit: 4
+              - url: https://www.rockpapershotgun.com/feed
+                title: Rock Paper Shotgun
+                limit: 3
+              - url: https://www.eurogamer.net/?format=rss
+                title: Eurogamer
+                limit: 3
+
+      - size: full
+        widgets:
+          - type: group
+            widgets:
+              - type: videos
+                title: Entertainment
+                style: horizontal-cards
+                limit: 8
+                channels:
+                  - UCeP4Yv3s4RvS0-6d9OInRMw # Real Civil Engineer
+                  - UCRHXUZ0BxbkU2MYZgsuFgkQ # The Spiffing Brit
+                  - UCzXwjTI6c6mVn6oui_p6oiw # SMii7Y
+                  - UCPbGiUt4Yu8EsaFM-KAmgjg # Grizzy
+
+              - type: videos
+                title: Science & Tech
+                style: horizontal-cards
+                limit: 8
+                channels:
+                  - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
+                  - UC-9b7aDP6ZN0coj9-xFnrtw  # Astrum
+                  - UCYO_jab_esuFRV4b17AJtAw  # 3Blue1Brown
+                  - UCV5vCi3jPJdURZwAOO_FNfQ  # The Thought Emporium
+                  - UCsBjURrPoezykLs9EqgamOA  # Fireship
+                  - UCR-DXc1voovS8nhAvccRZhg  # Jeff Geerling
+                  - UCXuqSBlHAE6Xw-yeJA0Tunw  # Linus Tech Tips
+                  - UCBJycsmduvYEL83R_U4JriQ  # Marques Brownlee
+
+          - type: split-column
+            widgets:
+              - type: group
+                widgets:
+                  - type: hacker-news
+                  - type: lobsters
+
+              - type: group
+                widgets:
+                  - type: reddit
+                    subreddit: selfhosted
+                    show-thumbnails: true
+                  - type: reddit
+                    subreddit: homelab
+                    show-thumbnails: true
+                  - type: reddit
+                    subreddit: gaming
+                    show-thumbnails: true
+                  - type: reddit
+                    subreddit: science
+                    show-thumbnails: true
+
+      - size: small
+        widgets:
+          - type: markets
+            markets:
+              - symbol: SPY
+                name: S&P 500
+              - symbol: BTC-USD
+                name: Bitcoin
+              - symbol: ETH-USD
+                name: Ethereum
+              - symbol: NVDA
+                name: NVIDIA
+
+  - name: Services
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 24h
+
+          - type: server-stats
+            servers:
+              - type: local
+                name: management
+                hide-mounts:
+                  - /var/lib/docker
+
+          - type: custom-api
+            title: Proxmox VE
+            cache: 1m
+            url: https://<proxmox-ip>:8006/api2/json/cluster/resources
+            allow-insecure: true
+            headers:
+              Accept: application/json
+              Authorization: PVEAPIToken=<user>@pve!<tokenid>=${PVE_API_TOKEN}
+            template: |
+              <div class="flex flex-column gap-5">
+                <div class="flex justify-between text-center">
+                  <div>
+                    {{ $nodes_online := len (.JSON.Array "data.#(type==\"node\")#|#(status==\"online\")#") }}
+                    {{ $nodes_total := len (.JSON.Array "data.#(type==\"node\")#") }}
+                    <div class="color-highlight size-h3">{{ $nodes_online }}/{{ $nodes_total }}</div>
+                    <div class="size-h5 uppercase">Node</div>
+                  </div>
+                  <div>
+                    {{ $lxc_running := len (.JSON.Array "data.#(type==\"lxc\")#|#(status==\"running\")#|#(template==0)#") }}
+                    {{ $lxc_total := len (.JSON.Array "data.#(type==\"lxc\")#|#(template==0)#") }}
+                    <div class="color-highlight size-h3">{{ $lxc_running }}/{{ $lxc_total }}</div>
+                    <div class="size-h5 uppercase">LXC</div>
+                  </div>
+                  <div>
+                    {{ $qemu_running := len (.JSON.Array "data.#(type==\"qemu\")#|#(status==\"running\")#|#(template==0)#") }}
+                    {{ $qemu_total := len (.JSON.Array "data.#(type==\"qemu\")#|#(template==0)#") }}
+                    <div class="color-highlight size-h3">{{ $qemu_running }}/{{ $qemu_total }}</div>
+                    <div class="size-h5 uppercase">VM</div>
+                  </div>
+                  <div>
+                    {{ $storage_available := len (.JSON.Array "data.#(type==\"storage\")#|#(status==\"available\")#") }}
+                    {{ $storage_total := len (.JSON.Array "data.#(type==\"storage\")#") }}
+                    <div class="color-highlight size-h3">{{ $storage_available }}/{{ $storage_total }}</div>
+                    <div class="size-h5 uppercase">Storage</div>
+                  </div>
+                </div>
+              </div>
+
+      - size: full
+        widgets:
+          - type: bookmarks
+            title: Infrastructure
+            groups:
+              - links:
+                  - title: Komodo
+                    url: https://komodo.home.example.com:<admin-port>
+                    icon: di:komodo
+              - links:
+                  - title: Traefik
+                    url: https://traefik.home.example.com:<admin-port>/dashboard/
+                    icon: di:traefik-proxy
+              - links:
+                  - title: FileBrowser
+                    url: https://files.home.example.com:<admin-port>
+                    icon: di:filebrowser
+              - links:
+                  - title: Pi-hole
+                    url: https://pihole.home.example.com:<admin-port>/admin
+                    icon: di:pi-hole
+              - links:
+                  - title: Grafana
+                    url: https://grafana.home.example.com:<admin-port>
+                    icon: di:grafana
+              - links:
+                  - title: Prometheus
+                    url: https://prometheus.home.example.com:<admin-port>
+                    icon: di:prometheus
+              - links:
+                  - title: Uptime Kuma
+                    url: https://kuma.home.example.com:<admin-port>
+                    icon: di:uptime-kuma
+
+          - type: bookmarks
+            title: Media
+            groups:
+              - links:
+                  - title: Jellyfin
+                    url: https://jellyfin.home.example.com
+                    icon: di:jellyfin
+              - links:
+                  - title: Jellystat
+                    url: https://jellystat.home.example.com:<admin-port>
+                    icon: di:jellystat
+              - links:
+                  - title: Seerr
+                    url: https://seerr.home.example.com
+                    icon: di:seerr
+              - links:
+                  - title: Sonarr
+                    url: https://sonarr.home.example.com:<admin-port>
+                    icon: di:sonarr
+              - links:
+                  - title: Radarr
+                    url: https://radarr.home.example.com:<admin-port>
+                    icon: di:radarr
+              - links:
+                  - title: Prowlarr
+                    url: https://prowlarr.home.example.com:<admin-port>
+                    icon: di:prowlarr
+              - links:
+                  - title: Bazarr
+                    url: https://bazarr.home.example.com:<admin-port>
+                    icon: di:bazarr
+              - links:
+                  - title: Dispatcharr
+                    url: https://dispatcharr.home.example.com:<admin-port>
+                    icon: di:dispatcharr
+              - links:
+                  - title: qBittorrent
+                    url: https://qbittorrent.home.example.com:<admin-port>
+                    icon: di:qbittorrent
+              - links:
+                  - title: SABnzbd
+                    url: https://sabnzbd.home.example.com:<admin-port>
+                    icon: di:sabnzbd
+
+          - type: bookmarks
+            title: IoT
+            groups:
+              - links:
+                  - title: Homebridge
+                    url: https://homebridge.home.example.com:<admin-port>
+                    icon: di:homebridge
+              - links:
+                  - title: Zigbee2MQTT
+                    url: https://zigbee.home.example.com:<admin-port>
+                    icon: di:zigbee2mqtt
+
+          - type: bookmarks
+            title: Gaming
+            groups:
+              - links:
+                  - title: Game Panel
+                    url: https://game-panel.home.example.com
+                    icon: di:pterodactyl
+
+          - type: bookmarks
+            title: Personal
+            groups:
+              - links:
+                  - title: Actual Budget
+                    url: https://budget.home.example.com:<admin-port>
+                    icon: di:actual-budget
+
+          - type: bookmarks
+            title: ADS-B
+            groups:
+              - links:
+                  - title: Ultrafeeder
+                    url: https://adsb.home.example.com:<admin-port>
+              - links:
+                  - title: Piaware
+                    url: https://piaware.home.example.com:<admin-port>
+                    icon: di:piaware.png
+              - links:
+                  - title: FlightRadar24
+                    url: https://fr24.home.example.com:<admin-port>
+                    icon: di:flightradar24
+
+      - size: small
+        widgets:
+          - type: dns-stats
+            service: pihole-v6
+            url: http://<pihole-ip>
+            password: ${PIHOLE_PASSWORD}

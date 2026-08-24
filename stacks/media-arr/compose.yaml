@@ -1,0 +1,145 @@
+services:
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 8989:8989
+    environment:
+      - PUID=1300
+      - PGID=1300
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/sonarr:/config
+      - /media:/media
+      - /torrents:/torrents
+      - /usenet:/usenet
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 7878:7878
+    environment:
+      - PUID=1301
+      - PGID=1300
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/radarr:/config
+      - /media:/media
+      - /torrents:/torrents
+      - /usenet:/usenet
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 9696:9696
+    environment:
+      - PUID=1302
+      - PGID=1300
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/prowlarr:/config
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 6767:6767
+    environment:
+      - PUID=1303
+      - PGID=1300
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/bazarr:/config
+      - /media:/media
+
+  seerr:
+    image: ghcr.io/seerr-team/seerr:latest
+    container_name: seerr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 5055:5055
+    environment:
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/seerr:/app/config
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    environment:
+      - TZ=Europe/Madrid
+
+  unpackerr:
+    image: golift/unpackerr:latest
+    container_name: unpackerr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    environment:
+      - PUID=1305
+      - PGID=1300
+      - TZ=Europe/Madrid
+      - UN_SONARR_0_URL=${SONARR_URL}
+      - UN_SONARR_0_API_KEY=${SONARR_API_KEY}
+      - UN_RADARR_0_URL=${RADARR_URL}
+      - UN_RADARR_0_API_KEY=${RADARR_API_KEY}
+    volumes:
+      - /torrents:/torrents
+
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:latest
+    container_name: recyclarr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    user: "1306:1300"
+    environment:
+      - TZ=Europe/Madrid
+      - CRON_SCHEDULE=0 3 * * *
+    volumes:
+      - /data/recyclarr:/config
+
+  dispatcharr:
+    image: ghcr.io/dispatcharr/dispatcharr:latest
+    container_name: dispatcharr
+    restart: unless-stopped
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+    ports:
+      - 9191:9191
+    environment:
+      - DISPATCHARR_ENV=aio
+      - REDIS_HOST=localhost
+      - CELERY_BROKER_URL=redis://localhost:6379/0
+      - DISPATCHARR_LOG_LEVEL=info
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/dispatcharr:/data

@@ -1,0 +1,20 @@
+http:
+  routers:
+    glance-public:
+      rule: "Host(`glance.example.com`)"
+      service: glance-public
+      entryPoints: [web]
+    seerr-public:
+      rule: "Host(`seerr.example.com`)"
+      service: seerr-public
+      entryPoints: [web]
+
+  services:
+    glance-public:
+      loadBalancer:
+        servers:
+          - url: "http://<mgmt-ip>:8081"
+    seerr-public:
+      loadBalancer:
+        servers:
+          - url: "http://<media-arr-ip>:5055"
