@@ -53,4 +53,4 @@ Note: Periphery connection may be refused - verify Periphery is installed before
 
 ## Services
 
-→ [personal apps](../services/personal-apps/_index.md) - Actual Budget
+→ [personal apps](../services/personal-apps/_index.md) - Actual Budget, Mealie, FreshRSS

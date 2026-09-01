@@ -18,6 +18,15 @@ http:
         - admin-only
       tls: {}
 
+    freshrss:
+      rule: "Host(`freshrss.<your-domain>`)"
+      service: freshrss
+      entryPoints:
+        - admin
+      middlewares:
+        - admin-only
+      tls: {}
+
   services:
     actual-budget:
       loadBalancer:
@@ -28,3 +37,8 @@ http:
       loadBalancer:
         servers:
           - url: "http://<personal-apps-ip>:9000"
+
+    freshrss:
+      loadBalancer:
+        servers:
+          - url: "http://<personal-apps-ip>:8080"

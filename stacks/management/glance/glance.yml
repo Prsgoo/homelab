@@ -255,6 +255,14 @@ pages:
                   - title: Actual Budget
                     url: https://budget.home.example.com:<admin-port>
                     icon: di:actual-budget
+              - links:
+                  - title: Mealie
+                    url: https://mealie.home.example.com:<admin-port>
+                    icon: di:mealie
+              - links:
+                  - title: FreshRSS
+                    url: https://freshrss.home.example.com:<admin-port>
+                    icon: di:freshrss
 
           - type: bookmarks
             title: ADS-B

@@ -19,7 +19,7 @@ updated: 2026-08-05
 | 302 | media-dl | `<media-dl-ip>` | local-lvm | 8GB | yes | qBittorrent + SABnzbd |
 | 400 | game-panel | `<panel-ip>` | local-lvm | 8GB | no | Pterodactyl panel + MariaDB - on-demand, start manually |
 | 401 | minecraft-wings | `<wings-ip>` | local-lvm | 16GB | no | Pterodactyl Wings + Docker - on-demand, start manually |
-| 600 | personal-apps | `<personal-apps-ip>` | local-lvm | 8GB | yes | Personal apps: Actual Budget (finance) |
+| 600 | personal-apps | `<personal-apps-ip>` | local-lvm | 8GB | yes | Personal apps: Actual Budget, Mealie, FreshRSS |
 
 
 ## Mount Points

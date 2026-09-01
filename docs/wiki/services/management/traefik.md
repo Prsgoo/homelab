@@ -63,6 +63,8 @@ See [internal https](../../infrastructure/internal-https.md) for the HTTPS/cert 
 | `zigbee.home.example.com:<admin-port>` | <iot-ip>:8080 | Zigbee2MQTT |
 | `homebridge.home.example.com:<admin-port>` | <iot-ip>:8581 | Homebridge |
 | `budget.home.example.com:<admin-port>` | <personal-apps-ip>:5006 | Actual Budget |
+| `mealie.home.example.com:<admin-port>` | <personal-apps-ip>:9000 | Mealie |
+| `freshrss.home.example.com:<admin-port>` | <personal-apps-ip>:8080 | FreshRSS |
 
 Route files live in `/data/config/management/traefik/config/`. Traefik hot-reloads on file change - no restart needed.
 
