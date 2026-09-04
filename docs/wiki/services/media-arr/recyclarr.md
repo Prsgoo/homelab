@@ -1,6 +1,6 @@
 ---
 title: Recyclarr
-updated: 2026-08-05
+updated: 2026-09-04
 ---
 
 # Recyclarr
@@ -11,6 +11,7 @@ LXC: [media arr](../../lxcs/media-arr.md) (CT 300) - syncs TRaSH Guides quality 
 
 | Setting | Value |
 |---------|-------|
+| Image | `ghcr.io/recyclarr/recyclarr:8` |
 | Config | `/data/recyclarr/` |
 | UID/GID | 1306:1306 |
 | Schedule | Cron, 3am daily |

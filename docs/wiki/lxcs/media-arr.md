@@ -1,6 +1,6 @@
 ---
 title: Media Arr LXC (CT 300)
-updated: 2026-08-05
+updated: 2026-09-04
 ---
 
 # Media Arr LXC (CT 300)
@@ -14,8 +14,9 @@ updated: 2026-08-05
 | CT ID | 300 |
 | Hostname | media-arr |
 | Template | Debian 13 standard |
-| rootfs | 16GB |
+| rootfs | 32GB |
 | RAM | 4096MB |
+| Swap | 2048MB |
 | Cores | 4 |
 | CPU limit | 2 |
 | IP | <media-arr-ip> |
@@ -23,7 +24,7 @@ updated: 2026-08-05
 | Unprivileged | yes |
 | Features | nesting=1, keyctl=1 |
 
-16GB rootfs required - Dispatcharr's AIO image alone is ~3.9GB. Update services one at a time to avoid running out of space (see [media arr](../services/media-arr/_index.md)).
+32GB rootfs - Dispatcharr's AIO image alone is ~3.9GB and the full stack (~9 images) fills fast. Update services one at a time to avoid running out of space (see [media arr](../services/media-arr/_index.md)).
 
 ## Bind Mounts
 
