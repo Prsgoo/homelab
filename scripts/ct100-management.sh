@@ -36,7 +36,7 @@ patch_conf $VMID "/dev/net/tun" "dev0: /dev/net/tun,gid=0,uid=0"
 echo ""
 echo "=== Stack files ==="
 deploy_stack "$STACKS_DIR/cloudflared"      "management/cloudflared" CLOUDFLARE_TUNNEL_TOKEN
-deploy_stack "$STACKS_DIR/filebrowser"      "management/filebrowser"
+deploy_stack "$STACKS_DIR/filebrowser"      "management/filebrowser" FILEBROWSER_DATABASE
 deploy_stack "$STACKS_DIR/glance"           "management/glance"      PVE_API_TOKEN PIHOLE_PASSWORD
 deploy_stack "$STACKS_DIR/traefik"          "management/traefik"     CLOUDFLARE_DNS_API_TOKEN
 deploy_stack "$STACKS_DIR/node-exporter-local" "node-exporter"

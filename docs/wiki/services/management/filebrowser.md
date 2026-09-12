@@ -1,11 +1,11 @@
 ---
 title: FileBrowser
-updated: 2026-08-05
+updated: 2026-09-12
 ---
 
 # FileBrowser
 
-LXC: [management lxc](../../lxcs/management-lxc.md) (CT 100) - web-based file manager for editing Traefik routes, Glance config, and stack compose files without SSH.
+LXC: [management lxc](../../lxcs/management-lxc.md) (CT 100) - web-based file manager for editing Traefik routes, Glance config, and stack compose files without SSH. Runs [FileBrowser Quantum](https://github.com/gtsteffaniak/filebrowser) (`gtstef/filebrowser:stable`), the actively maintained fork.
 
 ## Instance
 
@@ -14,7 +14,7 @@ LXC: [management lxc](../../lxcs/management-lxc.md) (CT 100) - web-based file ma
 | Port | 8082 |
 | Root | `/data/` (full `$DATA_ROOT/` pool) |
 | Database | `/data/config/management/filebrowser/filebrowser.db` |
-| URL | `https://files.home.example.com:<admin-port>` |
+| URL | `https://files.home.<your-domain>:<admin-port>` |
 | Managed as | Komodo stack `filebrowser` |
 
 ## File Permissions Note
