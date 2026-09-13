@@ -1,7 +1,7 @@
 http:
   routers:
     actual-budget:
-      rule: "Host(`budget.home.example.com`)"
+      rule: "Host(`budget.<your-domain>`)"
       service: actual-budget
       entryPoints:
         - admin
@@ -10,7 +10,7 @@ http:
       tls: {}
 
     mealie:
-      rule: "Host(`mealie.home.example.com`)"
+      rule: "Host(`mealie.<your-domain>`)"
       service: mealie
       entryPoints:
         - admin
@@ -21,6 +21,15 @@ http:
     freshrss:
       rule: "Host(`freshrss.<your-domain>`)"
       service: freshrss
+      entryPoints:
+        - admin
+      middlewares:
+        - admin-only
+      tls: {}
+
+    grimmory:
+      rule: "Host(`grimmory.<your-domain>`)"
+      service: grimmory
       entryPoints:
         - admin
       middlewares:
@@ -42,3 +51,8 @@ http:
       loadBalancer:
         servers:
           - url: "http://<personal-apps-ip>:8080"
+
+    grimmory:
+      loadBalancer:
+        servers:
+          - url: "http://<personal-apps-ip>:6060"

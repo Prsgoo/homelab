@@ -19,6 +19,17 @@ The guides follow dependency order. Pi-hole provides DNS for everything. Traefik
 | 9 | [ADS-B (Ultrafeeder)](ultrafeeder.md) | Komodo |
 | 10 | [Game Servers (Pterodactyl)](pterodactyl.md) | Tailscale, Cloudflare Tunnel |
 
+## Personal Apps
+
+Standalone guides for services in CT 600. All depend on Komodo and Traefik.
+
+| Guide | Description |
+|-------|-------------|
+| [Personal Finance (Actual Budget)](actual-budget.md) | Local-first budgeting |
+| [Recipe Manager (Mealie)](mealie.md) | Recipes, meal planning, shopping lists |
+| [RSS Reader (FreshRSS)](freshrss.md) | Self-hosted RSS aggregator |
+| [Digital Library (Grimmory)](grimmory.md) | Ebook library with metadata and built-in reader |
+
 ## Guide structure
 
 Every guide follows the same format:

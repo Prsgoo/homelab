@@ -1,0 +1,59 @@
+networks:
+  grimmory:
+    driver: bridge
+
+services:
+  grimmory:
+    image: ghcr.io/grimmory-tools/grimmory:latest
+    container_name: grimmory
+    restart: unless-stopped
+    ports:
+      - "6060:6060"
+    environment:
+      - USER_ID=1600
+      - GROUP_ID=1600
+      - TZ=<your-timezone>
+      - DATABASE_URL=jdbc:mariadb://grimmory-db:3306/grimmory
+      - DATABASE_USERNAME=grimmory
+      - DATABASE_PASSWORD=${GRIMMORY_DB_PASSWORD}
+      - API_DOCS_ENABLED=false
+      - DISK_TYPE=LOCAL
+      - SPRING_SERVLET_MULTIPART_MAX_FILE_SIZE=500MB
+      - SPRING_SERVLET_MULTIPART_MAX_REQUEST_SIZE=500MB
+    volumes:
+      - /data/grimmory/data:/app/data
+      - /books:/books
+      - /data/grimmory/bookdrop:/bookdrop
+    networks:
+      - grimmory
+    depends_on:
+      grimmory-db:
+        condition: service_healthy
+    healthcheck:
+      test: wget -q -O - http://localhost:6060/api/v1/healthcheck
+      interval: 60s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  grimmory-db:
+    image: lscr.io/linuxserver/mariadb:11.4.5
+    container_name: grimmory-db
+    restart: unless-stopped
+    environment:
+      - PUID=1600
+      - PGID=1600
+      - TZ=<your-timezone>
+      - MYSQL_ROOT_PASSWORD=${GRIMMORY_DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=grimmory
+      - MYSQL_USER=grimmory
+      - MYSQL_PASSWORD=${GRIMMORY_DB_PASSWORD}
+    volumes:
+      - /data/grimmory/db:/config
+    networks:
+      - grimmory
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
