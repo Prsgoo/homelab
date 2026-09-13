@@ -11,3 +11,4 @@ Conventions and rules that apply across the entire homelab. Read these before ad
 | [user group scheme](user-group-scheme.md) | UID/GID ranges, shared groups, per-service user table, and how to add new services |
 | [data layout](data-layout.md) | $DATA_ROOT directory structure, bind mount map per LXC, and how to extend it |
 | [lxc idmap](lxc-idmap.md) | Proxmox unprivileged LXC UID remapping - why it matters, the idmap fix, and host-side setup |
+| [service UID exceptions](service-uid-exceptions.md) | Services that ignore PUID/PGID - correct host-side ownership for each |

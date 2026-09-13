@@ -41,6 +41,12 @@ Monitor URL: `https://traefik.home.example.com:<admin-port>/dashboard/`
 
 The trailing slash is required - `/dashboard` without the slash returns 301, and Uptime Kuma may flag the redirect as a failure depending on its follow-redirect setting.
 
+## Notifications
+
+Configure in **Settings → Notifications**. Kuma supports many providers (Telegram, Pushover, email, webhooks, and more). Once a notification provider is saved, assign it to individual monitors from each monitor's edit screen.
+
+Each monitor can have multiple notification providers assigned. Notifications fire on status change (up → down and down → up).
+
 ## Settings
 
 - Primary Base URL: `https://kuma.home.example.com:<admin-port>` - used in notification links

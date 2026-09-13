@@ -11,3 +11,4 @@ title: Infrastructure
 | [tailscale](tailscale.md) | Remote access - Pi-hole as DNS server, CT 100 as subnet router |
 | [monitoring](monitoring.md) | Grafana + Prometheus - metrics for all LXCs and Proxmox host |
 | [internal https](internal-https.md) | HTTPS for internal services via `*.home.example.com` - Traefik wildcard cert + Unbound redirect |
+| [hardlinks](hardlinks.md) | How hardlinks work across the media LXCs and why the media stack depends on them |

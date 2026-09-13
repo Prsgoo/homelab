@@ -68,15 +68,15 @@ These only need to exist inside their own LXC **and on the host** (required for 
 | 1301 | `radarr`      | Radarr      | 1300 (`media`) | -            | CT 300 (media-arr) |
 | 1302 | `prowlarr`    | Prowlarr    | 1300 (`media`) | -            | CT 300 (media-arr) |
 | 1303 | `bazarr`      | Bazarr      | 1300 (`media`) | -            | CT 300 (media-arr) |
-| 1304 | `seerr`       | Seerr       | 1300 (`media`) | -            | CT 300 (media-arr) - **UID unused**: Seerr runs as built-in `node` (1000:1000), ignores PUID/PGID |
+| 1304 | `seerr`       | Seerr       | 1300 (`media`) | -            | CT 300 (media-arr) - UID unused, see [exceptions](service-uid-exceptions.md) |
 | 1305 | `unpackerr`   | Unpackerr   | 1300 (`media`) | -            | CT 300 (media-arr) |
 | 1306 | `recyclarr`   | Recyclarr   | 1300 (`media`) | -            | CT 300 (media-arr) |
-| 1308 | `dispatcharr` | Dispatcharr | 1300 (`media`) | -            | CT 300 (media-arr) - **UID reserved/unused**: aio image runs internal Postgres/Redis as root, ignores PUID/PGID |
+| 1308 | `dispatcharr` | Dispatcharr | 1300 (`media`) | -            | CT 300 (media-arr) - UID unused, see [exceptions](service-uid-exceptions.md) |
 | 1310 | `jellyfin`    | Jellyfin    | 1300 (`media`) | -            | CT 301 (media-server) |
-| 1311 | `jellystat`   | Jellystat   | 1300 (`media`) | -            | CT 301 (media-server) - UID reserved; no bind mount (named Docker volume) |
+| 1311 | `jellystat`   | Jellystat   | 1300 (`media`) | -            | CT 301 (media-server) - named volume, no bind mount, see [exceptions](service-uid-exceptions.md) |
 | 1307 | `sabnzbd`     | SABnzbd     | 1300 (`media`) | -            | CT 302 (media-dl)  |
 | 1320 | `qbittorrent` | qBittorrent | 1300 (`media`) | -            | CT 302 (media-dl)  |
-| 1001 | `actual-budget` | Actual Budget | private (1001) | -          | CT 600 (personal-apps) - **UID hardcoded in image** (runs as internal `actual` user), no PUID/PGID support. Same exception pattern as Seerr (node/1000). |
+| 1001 | `actual-budget` | Actual Budget | private (1001) | -          | CT 600 (personal-apps) - UID hardcoded in image, see [exceptions](service-uid-exceptions.md) |
 
 > Zigbee USB dongle access: the device is owned by group `iot` (GID 1200) via the Proxmox `dev0` config (`gid=1200`). zigbee2mqtt accesses it through its primary `iot` group membership - no `dialout` needed. See [lxc idmap](lxc-idmap.md) for why `dialout` (GID 20) cannot be used in an unprivileged LXC.
 
@@ -142,5 +142,5 @@ What you control at the OS level:
 - GIDs for shared groups must match on the host and in every LXC that shares the same $DATA_ROOT folder
 - UID ranges mirror LXC ID ranges - 1200s = IoT, 1300s = media, etc.
 - Service users must be created on the **host** as well as inside the LXC - bind mount ownership requires it
-- Management LXC is the only exception to the per-service-user rule
+- Some images ignore PUID/PGID entirely (Seerr, Dispatcharr, Actual Budget, FreshRSS) - see [service UID exceptions](service-uid-exceptions.md) for the correct host-side ownership for each
 - See [lxc idmap](lxc-idmap.md) before creating any LXC with service-owned bind mounts

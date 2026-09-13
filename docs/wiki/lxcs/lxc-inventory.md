@@ -1,6 +1,6 @@
 ---
 title: LXC Inventory
-updated: 2026-08-05
+updated: 2026-09-13
 ---
 
 # LXC Inventory
@@ -14,12 +14,12 @@ updated: 2026-08-05
 | 200 | ultrafeeder | `<ultrafeeder-ip>` | local-lvm | 8GB | yes | ADS-B feeder stack (ultrafeeder + piaware + fr24) |
 | 201 | iot | `<iot-ip>` | local-lvm | 8GB | yes | IoT automation (homebridge, zigbee2mqtt, mosquitto) |
 | 202 | monitoring | `<monitoring-ip>` | local-lvm | 8GB | yes | Grafana + Prometheus + pve-exporter |
-| 300 | media-arr | `<media-arr-ip>` | local-lvm | 16GB | yes | Sonarr, Radarr, Prowlarr, Bazarr, Seerr, Flaresolverr, Unpackerr, Recyclarr, Dispatcharr |
+| 300 | media-arr | `<media-arr-ip>` | local-lvm | 12GB | yes | Sonarr, Radarr, Prowlarr, Bazarr, Seerr, Flaresolverr, Unpackerr, Recyclarr, Dispatcharr |
 | 301 | media-server | `<media-server-ip>` | local-lvm | 8GB | yes | Jellyfin + Jellystat media server stack |
 | 302 | media-dl | `<media-dl-ip>` | local-lvm | 8GB | yes | qBittorrent + SABnzbd |
 | 400 | game-panel | `<panel-ip>` | local-lvm | 8GB | no | Pterodactyl panel + MariaDB - on-demand, start manually |
 | 401 | minecraft-wings | `<wings-ip>` | local-lvm | 16GB | no | Pterodactyl Wings + Docker - on-demand, start manually |
-| 600 | personal-apps | `<personal-apps-ip>` | local-lvm | 8GB | yes | Personal apps: Actual Budget, Mealie, FreshRSS |
+| 600 | personal-apps | `<personal-apps-ip>` | local-lvm | 8GB | yes | Personal apps: Actual Budget, Mealie, FreshRSS, Grimmory |
 
 
 ## Mount Points
@@ -45,6 +45,7 @@ updated: 2026-08-05
 | 401 | minecraft-wings | mp1 | `$DATA_ROOT/minecraft/volumes` | `/var/lib/pterodactyl/volumes` |
 | 401 | minecraft-wings | mp2 | `$DATA_ROOT/minecraft/backups` | `/var/lib/pterodactyl/backups` |
 | 600 | personal-apps | mp0 | `$DATA_ROOT/config/personal-apps` | `/data` |
+| 600 | personal-apps | mp1 | `$DATA_ROOT/media-stack/media/books` | `/books` |
 
 ## OS Standard
 
