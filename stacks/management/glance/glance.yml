@@ -9,147 +9,245 @@ theme:
 
 pages:
   - name: Home
-    columns:
-      - size: small
-        widgets:
-          - type: calendar
-            first-day-of-week: monday
+    head-widgets:
+      - type: html
+        frameless: true
+        source: |
+          <style>
+          .srow{display:grid;gap:10px;align-items:stretch;}
+          .stile{border:1px solid var(--color-widget-content-border);border-radius:var(--border-radius);padding:12px 14px;display:flex;flex-direction:column;gap:3px;background:var(--color-widget-background);}
+          .slabel{font-size:var(--font-size-h6);color:var(--color-text-subdue);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
+          .sval{font-size:20px;color:var(--color-primary);line-height:1.15;}
+          .ssub{font-size:var(--font-size-base);color:var(--color-text-paragraph);}
+          .srow2{grid-template-columns:repeat(2,minmax(0,1fr));}
+          .srow5{grid-template-columns:repeat(6,minmax(0,1fr));}
+          .srow5 .swide{grid-column:span 2;}
+          @media(max-width:1200px){.srow5{grid-template-columns:repeat(3,minmax(0,1fr));}.srow5 .swide{grid-column:span 1;}}
+          @media(max-width:700px){.srow5,.srow2{grid-template-columns:1fr;}}
+          .sgfoot{margin-top:auto;}
+          .spark{width:100%;height:30px;display:block;}
+          .sparkf{fill:var(--color-primary);opacity:.16;}
+          .sparkl{fill:none;stroke:var(--color-primary);stroke-width:1.5;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round;}
+          .sparkf2{fill:var(--color-primary);opacity:.06;}
+          .sparkl2{fill:none;stroke:var(--color-primary);stroke-width:1.5;opacity:.35;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round;}
+          .sparkna{font-size:var(--font-size-h6);color:var(--color-text-subdue);margin-top:10px;}
+          .sparkk{display:flex;gap:10px;font-size:var(--font-size-h6);color:var(--color-text-subdue);margin-top:3px;}
+          .sparkk i{font-style:normal;}
+          .sparkk b{color:var(--color-primary);font-weight:normal;}
+          .rx{color:var(--color-primary);}
+          .sbar{height:9px;width:100%;border-radius:5px;background:var(--color-widget-content-border);overflow:hidden;}
+          .sbarf{height:100%;border-radius:5px;background:var(--color-primary);}
+          .lxg{display:grid;grid-template-columns:14px 1fr 80px 32px 80px 42px;align-items:center;gap:6px;padding:5px 0;border-top:1px solid var(--color-widget-content-border);}
+          .lxg:first-child{border-top:0;padding-top:0;}
+          .lxdot{width:7px;height:7px;border-radius:50%;background:var(--color-primary);flex-shrink:0;}
+          .lxdot.dn{background:var(--color-negative);}
+          .lxn{font-size:var(--font-size-h3);color:var(--color-text-highlight);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+          .lxstopped .lxn{color:var(--color-text-subdue);}
+          .lxbar{height:6px;border-radius:3px;background:var(--color-widget-content-border);overflow:hidden;}
+          .lxbarf{height:100%;border-radius:3px;background:var(--color-primary);}
+          .lxpct{font-size:var(--font-size-h6);color:var(--color-text-subdue);white-space:nowrap;text-align:right;}
+          </style>
 
-          - type: weather
-            location: <your-city>, <your-country>
-            units: metric
-            hour-format: 24h
-
-          - type: rss
-            limit: 10
-            collapse-after: 3
-            cache: 6h
-            feeds:
-              - url: https://selfh.st/rss/
-                title: selfh.st
-                limit: 4
-              - url: https://www.rockpapershotgun.com/feed
-                title: Rock Paper Shotgun
-                limit: 3
-              - url: https://www.eurogamer.net/?format=rss
-                title: Eurogamer
-                limit: 3
-
-      - size: full
-        widgets:
-          - type: group
-            widgets:
-              - type: videos
-                title: Entertainment
-                style: horizontal-cards
-                limit: 8
-                channels:
-                  - UCeP4Yv3s4RvS0-6d9OInRMw # Real Civil Engineer
-                  - UCRHXUZ0BxbkU2MYZgsuFgkQ # The Spiffing Brit
-                  - UCzXwjTI6c6mVn6oui_p6oiw # SMii7Y
-                  - UCPbGiUt4Yu8EsaFM-KAmgjg # Grizzy
-
-              - type: videos
-                title: Science & Tech
-                style: horizontal-cards
-                limit: 8
-                channels:
-                  - UCHnyfMqiRRG1u-2MsSQLbXA # Veritasium
-                  - UC-9b7aDP6ZN0coj9-xFnrtw  # Astrum
-                  - UCYO_jab_esuFRV4b17AJtAw  # 3Blue1Brown
-                  - UCV5vCi3jPJdURZwAOO_FNfQ  # The Thought Emporium
-                  - UCsBjURrPoezykLs9EqgamOA  # Fireship
-                  - UCR-DXc1voovS8nhAvccRZhg  # Jeff Geerling
-                  - UCXuqSBlHAE6Xw-yeJA0Tunw  # Linus Tech Tips
-                  - UCBJycsmduvYEL83R_U4JriQ  # Marques Brownlee
-
-          - type: split-column
-            widgets:
-              - type: group
-                widgets:
-                  - type: hacker-news
-                  - type: lobsters
-
-              - type: group
-                widgets:
-                  - type: reddit
-                    subreddit: selfhosted
-                    show-thumbnails: true
-                  - type: reddit
-                    subreddit: homelab
-                    show-thumbnails: true
-                  - type: reddit
-                    subreddit: gaming
-                    show-thumbnails: true
-                  - type: reddit
-                    subreddit: science
-                    show-thumbnails: true
-
-      - size: small
-        widgets:
-          - type: markets
-            markets:
-              - symbol: SPY
-                name: S&P 500
-              - symbol: BTC-USD
-                name: Bitcoin
-              - symbol: ETH-USD
-                name: Ethereum
-              - symbol: NVDA
-                name: NVIDIA
-
-  - name: Services
     columns:
       - size: small
         widgets:
           - type: clock
             hour-format: 24h
 
-          - type: server-stats
-            servers:
-              - type: local
-                name: management
-                hide-mounts:
-                  - /var/lib/docker
+          - type: weather
+            location: ${WEATHER_LOCATION}
+            units: metric
+            hour-format: 24h
 
+          - type: dns-stats
+            service: pihole-v6
+            url: http://<pihole-ip>
+            password: ${PIHOLE_PASSWORD}
+
+      - size: full
+        widgets:
           - type: custom-api
-            title: Proxmox VE
-            cache: 1m
-            url: https://<proxmox-ip>:8006/api2/json/cluster/resources
+            title: Host
+            frameless: true
+            cache: 5m
+            url: https://<proxmox-ip>:8006/api2/json/nodes/<node-name>/status
             allow-insecure: true
             headers:
               Accept: application/json
-              Authorization: PVEAPIToken=<user>@pve!<tokenid>=${PVE_API_TOKEN}
+              Authorization: PVEAPIToken=<pve-api-token>
             template: |
-              <div class="flex flex-column gap-5">
-                <div class="flex justify-between text-center">
-                  <div>
-                    {{ $nodes_online := len (.JSON.Array "data.#(type==\"node\")#|#(status==\"online\")#") }}
-                    {{ $nodes_total := len (.JSON.Array "data.#(type==\"node\")#") }}
-                    <div class="color-highlight size-h3">{{ $nodes_online }}/{{ $nodes_total }}</div>
-                    <div class="size-h5 uppercase">Node</div>
-                  </div>
-                  <div>
-                    {{ $lxc_running := len (.JSON.Array "data.#(type==\"lxc\")#|#(status==\"running\")#|#(template==0)#") }}
-                    {{ $lxc_total := len (.JSON.Array "data.#(type==\"lxc\")#|#(template==0)#") }}
-                    <div class="color-highlight size-h3">{{ $lxc_running }}/{{ $lxc_total }}</div>
-                    <div class="size-h5 uppercase">LXC</div>
-                  </div>
-                  <div>
-                    {{ $qemu_running := len (.JSON.Array "data.#(type==\"qemu\")#|#(status==\"running\")#|#(template==0)#") }}
-                    {{ $qemu_total := len (.JSON.Array "data.#(type==\"qemu\")#|#(template==0)#") }}
-                    <div class="color-highlight size-h3">{{ $qemu_running }}/{{ $qemu_total }}</div>
-                    <div class="size-h5 uppercase">VM</div>
-                  </div>
-                  <div>
-                    {{ $storage_available := len (.JSON.Array "data.#(type==\"storage\")#|#(status==\"available\")#") }}
-                    {{ $storage_total := len (.JSON.Array "data.#(type==\"storage\")#") }}
-                    <div class="color-highlight size-h3">{{ $storage_available }}/{{ $storage_total }}</div>
-                    <div class="size-h5 uppercase">Storage</div>
+              {{ $updays := div (.JSON.Float "data.uptime") 86400.0 }}
+              {{ $swappct := 0.0 }}{{ if gt (.JSON.Float "data.swap.total") 0.0 }}{{ $swappct = mul (div (.JSON.Float "data.swap.used") (.JSON.Float "data.swap.total")) 100.0 }}{{ end }}
+              <div class="srow srow2">
+                <div class="stile">
+                  <div class="slabel">System</div>
+                  <div class="sval">homelab</div>
+                  <div class="ssub" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ .JSON.String "data.kversion" }}</div>
+                  <div class="sgfoot"><div class="ssub" style="color:var(--color-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ .JSON.String "data.pveversion" }}</div></div>
+                </div>
+                <div class="stile">
+                  <div class="slabel">Vitals</div>
+                  <div class="ssub">up <span style="color:var(--color-primary);">{{ printf "%.1f" $updays }}d</span></div>
+                  <div class="ssub">load {{ .JSON.String "data.loadavg.0" }} / {{ .JSON.String "data.loadavg.1" }} / {{ .JSON.String "data.loadavg.2" }}</div>
+                  <div class="sgfoot">
+                    <div class="ssub">swap {{ printf "%.0f" $swappct }}% &middot; {{ div (.JSON.Float "data.swap.used") 1073741824 | printf "%.1f" }} / {{ div (.JSON.Float "data.swap.total") 1073741824 | printf "%.1f" }} GB</div>
                   </div>
                 </div>
               </div>
 
+          - type: custom-api
+            title: Resources
+            frameless: true
+            cache: 1m
+            url: https://<proxmox-ip>:8006/api2/json/nodes/<node-name>/status
+            allow-insecure: true
+            headers:
+              Accept: application/json
+              Authorization: PVEAPIToken=<pve-api-token>
+            subrequests:
+              rrd:
+                url: https://<proxmox-ip>:8006/api2/json/nodes/<node-name>/rrddata?timeframe=hour&cf=AVERAGE
+                allow-insecure: true
+                headers:
+                  Accept: application/json
+                  Authorization: PVEAPIToken=<pve-api-token>
+            template: |
+              {{ $rrd := (.Subrequest "rrd").JSON.Array "data" }}
+              {{ $cn := len $rrd }}
+              {{ $cpu := mul (.JSON.Float "data.cpu") 100.0 }}
+              {{ $mem_used := .JSON.Float "data.memory.used" }}
+              {{ $mem_total := .JSON.Float "data.memory.total" }}
+              {{ $mem_pct := mul (div $mem_used $mem_total) 100.0 }}
+              {{ $disk_used := .JSON.Float "data.rootfs.used" }}
+              {{ $disk_total := .JSON.Float "data.rootfs.total" }}
+              {{ $disk_pct := mul (div $disk_used $disk_total) 100.0 }}
+              {{ $cpucount := .JSON.Float "data.cpuinfo.cpus" }}
+              {{/* Pass 1: CPU/Load/Mem sparklines + net max + last net values */}}
+              {{ $cp := "" }}{{ $mp := "" }}{{ $lp := "" }}
+              {{ $csm := 0.0 }}{{ $cpk := 0.0 }}{{ $cct := 0.0 }}
+              {{ $msm := 0.0 }}{{ $mpk := 0.0 }}
+              {{ $net_max := 1024.0 }}
+              {{ $last_netin := 0.0 }}{{ $last_netout := 0.0 }}
+              {{ range $i, $d := $rrd }}
+                {{ $cv := mul ($d.Float "cpu") 100.0 }}
+                {{ $cp = printf "%s %d,%.1f" $cp $i (sub 100.0 $cv) }}
+                {{ if gt $cv $cpk }}{{ $cpk = $cv }}{{ end }}
+                {{ $csm = sub $csm (mul $cv -1.0) }}
+                {{ $cct = sub $cct -1.0 }}
+                {{ $mv := 0.0 }}{{ if gt ($d.Float "memtotal") 0.0 }}{{ $mv = mul (div ($d.Float "memused") ($d.Float "memtotal")) 100.0 }}{{ end }}
+                {{ $mp = printf "%s %d,%.1f" $mp $i (sub 100.0 $mv) }}
+                {{ if gt $mv $mpk }}{{ $mpk = $mv }}{{ end }}
+                {{ $msm = sub $msm (mul $mv -1.0) }}
+                {{ $mc := $d.Float "maxcpu" }}{{ if le $mc 0.0 }}{{ $mc = $cpucount }}{{ end }}{{ if le $mc 0.0 }}{{ $mc = 1.0 }}{{ end }}
+                {{ $lv := mul (div ($d.Float "loadavg") $mc) 100.0 }}
+                {{ $lp = printf "%s %d,%.1f" $lp $i (sub 100.0 $lv) }}
+                {{ if gt ($d.Float "netin") $net_max }}{{ $net_max = $d.Float "netin" }}{{ end }}
+                {{ if gt ($d.Float "netout") $net_max }}{{ $net_max = $d.Float "netout" }}{{ end }}
+                {{ $last_netin = $d.Float "netin" }}
+                {{ $last_netout = $d.Float "netout" }}
+              {{ end }}
+              {{/* Pass 2: network sparkline points (needs net_max from pass 1) */}}
+              {{ $np := "" }}{{ $tp := "" }}
+              {{ range $i, $d := $rrd }}
+                {{ $np = printf "%s %d,%.1f" $np $i (sub 100.0 (mul (div ($d.Float "netin") $net_max) 100.0)) }}
+                {{ $tp = printf "%s %d,%.1f" $tp $i (sub 100.0 (mul (div ($d.Float "netout") $net_max) 100.0)) }}
+              {{ end }}
+              <div class="srow srow5">
+                <div class="stile">
+                  <div class="slabel">CPU</div>
+                  <div class="sval">{{ printf "%.1f" $cpu }}%</div>
+                  <div class="ssub">{{ .JSON.Int "data.cpuinfo.cpus" }} threads &middot; {{ .JSON.Float "data.wait" | printf "%.1f" }}% iowait</div>
+                  <div class="sgfoot">
+                    {{ if gt $cn 1 }}
+                    <svg class="spark" viewBox="0 0 {{ sub $cn 1 }} 100" preserveAspectRatio="none" style="overflow:hidden;">
+                      <polygon class="sparkf" points="0,100{{ $cp }} {{ sub $cn 1 }},100"/>
+                      <polyline class="sparkl" points="{{ $cp }}"/>
+                    </svg>
+                    <div class="sparkk"><i><b>avg</b> {{ if gt $cct 0.0 }}{{ div $csm $cct | printf "%.1f" }}{{ else }}&ndash;{{ end }}%</i><i><b>pk</b> {{ printf "%.1f" $cpk }}%</i></div>
+                    {{ else }}<div class="sparkna">collecting&hellip;</div>{{ end }}
+                  </div>
+                </div>
+                <div class="stile">
+                  <div class="slabel">Load Avg</div>
+                  <div class="sval">{{ .JSON.String "data.loadavg.0" }}</div>
+                  <div class="ssub">{{ .JSON.String "data.loadavg.1" }} (5m) &middot; {{ .JSON.String "data.loadavg.2" }} (15m)</div>
+                  <div class="sgfoot">
+                    {{ if gt $cn 1 }}
+                    <svg class="spark" viewBox="0 0 {{ sub $cn 1 }} 100" preserveAspectRatio="none" style="overflow:hidden;">
+                      <polygon class="sparkf" points="0,100{{ $lp }} {{ sub $cn 1 }},100"/>
+                      <polyline class="sparkl" points="{{ $lp }}"/>
+                    </svg>
+                    <div class="sparkk"><i><b>cores</b> {{ .JSON.Int "data.cpuinfo.cpus" }}</i></div>
+                    {{ else }}<div class="sparkna">collecting&hellip;</div>{{ end }}
+                  </div>
+                </div>
+                <div class="stile">
+                  <div class="slabel">Memory</div>
+                  <div class="sval">{{ printf "%.1f" $mem_pct }}%</div>
+                  <div class="ssub">{{ div $mem_used 1073741824 | printf "%.1f" }} / {{ div $mem_total 1073741824 | printf "%.1f" }} GB</div>
+                  <div class="sgfoot">
+                    {{ if gt $cn 1 }}
+                    <svg class="spark" viewBox="0 0 {{ sub $cn 1 }} 100" preserveAspectRatio="none" style="overflow:hidden;">
+                      <polygon class="sparkf" points="0,100{{ $mp }} {{ sub $cn 1 }},100"/>
+                      <polyline class="sparkl" points="{{ $mp }}"/>
+                    </svg>
+                    <div class="sparkk"><i><b>free</b> {{ div (.JSON.Float "data.memory.free") 1073741824 | printf "%.1f" }} GB</i><i><b>pk</b> {{ printf "%.1f" $mpk }}%</i></div>
+                    {{ else }}<div class="sparkna">collecting&hellip;</div>{{ end }}
+                  </div>
+                </div>
+                <div class="stile">
+                  <div class="slabel">Root Disk</div>
+                  <div class="sval">{{ printf "%.1f" $disk_pct }}%</div>
+                  <div class="ssub">{{ div $disk_used 1000000000 | printf "%.0f" }} / {{ div $disk_total 1000000000 | printf "%.0f" }} GB</div>
+                  <div class="sgfoot">
+                    <div class="sbar"><div class="sbarf" style="width:{{ printf "%.1f" $disk_pct }}%;"></div></div>
+                    <div class="sparkk"><i><b>free</b> {{ div (.JSON.Float "data.rootfs.free") 1000000000 | printf "%.0f" }} GB</i></div>
+                  </div>
+                </div>
+                <div class="stile swide">
+                  <div class="slabel">Network</div>
+                  <div class="sval">&darr; {{ div $last_netin 1024 | printf "%.0f" }} <span style="color:var(--color-text-subdue);">/</span> &uarr; {{ div $last_netout 1024 | printf "%.0f" }}</div>
+                  <div class="ssub">KB/s</div>
+                  <div class="sgfoot">
+                    {{ if gt $cn 1 }}
+                    <svg class="spark" viewBox="0 0 {{ sub $cn 1 }} 100" preserveAspectRatio="none" style="overflow:hidden;">
+                      <polygon class="sparkf" points="0,100{{ $np }} {{ sub $cn 1 }},100"/>
+                      <polygon class="sparkf2" points="0,100{{ $tp }} {{ sub $cn 1 }},100"/>
+                      <polyline class="sparkl" points="{{ $np }}"/>
+                      <polyline class="sparkl2" points="{{ $tp }}"/>
+                    </svg>
+                    <div class="sparkk"><i class="rx">&darr; in</i><i>&uarr; out</i><i><b>pk</b> {{ div $net_max 1024 | printf "%.0f" }} KB/s</i></div>
+                    {{ else }}<div class="sparkna">collecting&hellip;</div>{{ end }}
+                  </div>
+                </div>
+              </div>
+
+          - type: custom-api
+            title: LXC
+            frameless: true
+            cache: 2m
+            url: https://<proxmox-ip>:8006/api2/json/cluster/resources
+            allow-insecure: true
+            headers:
+              Accept: application/json
+              Authorization: PVEAPIToken=<pve-api-token>
+            template: |
+              {{ range (.JSON.Array "data.#(type==\"lxc\")#|#(template==0)#") }}
+              {{ $running := eq (.String "status") "running" }}
+              {{ $cpupct := mul (.Float "cpu") 100.0 }}
+              {{ $mempct := 0.0 }}{{ if gt (.Float "maxmem") 0.0 }}{{ $mempct = mul (div (.Float "mem") (.Float "maxmem")) 100.0 }}{{ end }}
+              <div class="lxg{{ if not $running }} lxstopped{{ end }}">
+                <span class="lxdot{{ if not $running }} dn{{ end }}"></span>
+                <span class="lxn">{{ .String "name" }}</span>
+                <div class="lxbar"><div class="lxbarf" style="width:{{ printf "%.0f" $cpupct }}%;"></div></div>
+                <span class="lxpct">{{ printf "%.1f" $cpupct }}%</span>
+                <div class="lxbar"><div class="lxbarf" style="width:{{ printf "%.0f" $mempct }}%;"></div></div>
+                <span class="lxpct">{{ div (.Float "mem") 1073741824 | printf "%.1f" }}G</span>
+              </div>
+              {{ end }}
+
+  - name: Services
+    columns:
       - size: full
         widgets:
           - type: bookmarks
@@ -157,31 +255,31 @@ pages:
             groups:
               - links:
                   - title: Komodo
-                    url: https://komodo.home.example.com:<admin-port>
+                    url: https://komodo.<your-domain>:8443
                     icon: di:komodo
               - links:
                   - title: Traefik
-                    url: https://traefik.home.example.com:<admin-port>/dashboard/
+                    url: https://traefik.<your-domain>:8443/dashboard/
                     icon: di:traefik-proxy
               - links:
                   - title: FileBrowser
-                    url: https://files.home.example.com:<admin-port>
-                    icon: di:filebrowser
+                    url: https://files.<your-domain>:8443
+                    icon: di:filebrowser-quantum
               - links:
                   - title: Pi-hole
-                    url: https://pihole.home.example.com:<admin-port>/admin
+                    url: https://pihole.<your-domain>:8443/admin
                     icon: di:pi-hole
               - links:
                   - title: Grafana
-                    url: https://grafana.home.example.com:<admin-port>
+                    url: https://grafana.<your-domain>:8443
                     icon: di:grafana
               - links:
                   - title: Prometheus
-                    url: https://prometheus.home.example.com:<admin-port>
+                    url: https://prometheus.<your-domain>:8443
                     icon: di:prometheus
               - links:
                   - title: Uptime Kuma
-                    url: https://kuma.home.example.com:<admin-port>
+                    url: https://kuma.<your-domain>:8443
                     icon: di:uptime-kuma
 
           - type: bookmarks
@@ -189,99 +287,91 @@ pages:
             groups:
               - links:
                   - title: Jellyfin
-                    url: https://jellyfin.home.example.com
+                    url: https://jellyfin.<your-domain>
                     icon: di:jellyfin
               - links:
                   - title: Jellystat
-                    url: https://jellystat.home.example.com:<admin-port>
+                    url: https://jellystat.<your-domain>:8443
                     icon: di:jellystat
               - links:
                   - title: Seerr
-                    url: https://seerr.home.example.com
+                    url: https://seerr.<your-domain>
                     icon: di:seerr
               - links:
                   - title: Sonarr
-                    url: https://sonarr.home.example.com:<admin-port>
+                    url: https://sonarr.<your-domain>:8443
                     icon: di:sonarr
               - links:
                   - title: Radarr
-                    url: https://radarr.home.example.com:<admin-port>
+                    url: https://radarr.<your-domain>:8443
                     icon: di:radarr
               - links:
                   - title: Prowlarr
-                    url: https://prowlarr.home.example.com:<admin-port>
+                    url: https://prowlarr.<your-domain>:8443
                     icon: di:prowlarr
               - links:
                   - title: Bazarr
-                    url: https://bazarr.home.example.com:<admin-port>
+                    url: https://bazarr.<your-domain>:8443
                     icon: di:bazarr
               - links:
                   - title: Dispatcharr
-                    url: https://dispatcharr.home.example.com:<admin-port>
+                    url: https://dispatcharr.<your-domain>:8443
                     icon: di:dispatcharr
               - links:
                   - title: qBittorrent
-                    url: https://qbittorrent.home.example.com:<admin-port>
+                    url: https://qbittorrent.<your-domain>:8443
                     icon: di:qbittorrent
               - links:
                   - title: SABnzbd
-                    url: https://sabnzbd.home.example.com:<admin-port>
+                    url: https://sabnzbd.<your-domain>:8443
                     icon: di:sabnzbd
-
-          - type: bookmarks
-            title: IoT
-            groups:
-              - links:
-                  - title: Homebridge
-                    url: https://homebridge.home.example.com:<admin-port>
-                    icon: di:homebridge
-              - links:
-                  - title: Zigbee2MQTT
-                    url: https://zigbee.home.example.com:<admin-port>
-                    icon: di:zigbee2mqtt
-
-          - type: bookmarks
-            title: Gaming
-            groups:
-              - links:
-                  - title: Game Panel
-                    url: https://game-panel.home.example.com
-                    icon: di:pterodactyl
 
           - type: bookmarks
             title: Personal
             groups:
               - links:
                   - title: Actual Budget
-                    url: https://budget.home.example.com:<admin-port>
+                    url: https://budget.<your-domain>:8443
                     icon: di:actual-budget
               - links:
                   - title: Mealie
-                    url: https://mealie.home.example.com:<admin-port>
+                    url: https://mealie.<your-domain>:8443
                     icon: di:mealie
               - links:
                   - title: FreshRSS
-                    url: https://freshrss.home.example.com:<admin-port>
+                    url: https://freshrss.<your-domain>:8443
                     icon: di:freshrss
+              - links:
+                  - title: Grimmory
+                    url: https://grimmory.<your-domain>:8443
+                    icon: di:grimmory
+
+          - type: bookmarks
+            title: IoT & Gaming
+            groups:
+              - links:
+                  - title: Homebridge
+                    url: https://homebridge.<your-domain>:8443
+                    icon: di:homebridge
+              - links:
+                  - title: Zigbee2MQTT
+                    url: https://zigbee.<your-domain>:8443
+                    icon: di:zigbee2mqtt
+              - links:
+                  - title: Game Panel
+                    url: https://game-panel.<your-domain>
+                    icon: di:pterodactyl
 
           - type: bookmarks
             title: ADS-B
             groups:
               - links:
                   - title: Ultrafeeder
-                    url: https://adsb.home.example.com:<admin-port>
+                    url: https://adsb.<your-domain>:8443
               - links:
                   - title: Piaware
-                    url: https://piaware.home.example.com:<admin-port>
-                    icon: di:piaware.png
+                    url: https://piaware.<your-domain>:8443
               - links:
                   - title: FlightRadar24
-                    url: https://fr24.home.example.com:<admin-port>
+                    url: https://fr24.<your-domain>:8443
                     icon: di:flightradar24
-
-      - size: small
-        widgets:
-          - type: dns-stats
-            service: pihole-v6
-            url: http://<pihole-ip>
-            password: ${PIHOLE_PASSWORD}

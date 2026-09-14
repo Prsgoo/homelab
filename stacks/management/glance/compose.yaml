@@ -3,9 +3,12 @@ services:
     image: glanceapp/glance
     container_name: glance
     restart: unless-stopped
+    dns:
+      - <pihole-ip>
     environment:
       - PVE_API_TOKEN=${PVE_API_TOKEN}
       - PIHOLE_PASSWORD=${PIHOLE_PASSWORD}
+      - WEATHER_LOCATION=${WEATHER_LOCATION}
     ports:
       - 8081:8080
     volumes:
