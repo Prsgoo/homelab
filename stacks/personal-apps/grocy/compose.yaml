@@ -1,0 +1,13 @@
+services:
+  grocy:
+    image: lscr.io/linuxserver/grocy:latest
+    container_name: grocy
+    environment:
+      - PUID=1601
+      - PGID=1600
+      - TZ=<your-timezone>
+    volumes:
+      - /data/grocy:/config
+    ports:
+      - "9241:80"
+    restart: unless-stopped

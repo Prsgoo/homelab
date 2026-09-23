@@ -36,6 +36,15 @@ http:
         - admin-only
       tls: {}
 
+    grocy:
+      rule: "Host(`grocy.<your-domain>`)"
+      service: grocy
+      entryPoints:
+        - admin
+      middlewares:
+        - admin-only
+      tls: {}
+
   services:
     actual-budget:
       loadBalancer:
@@ -56,3 +65,8 @@ http:
       loadBalancer:
         servers:
           - url: "http://<personal-apps-ip>:6060"
+
+    grocy:
+      loadBalancer:
+        servers:
+          - url: "http://<personal-apps-ip>:9241"

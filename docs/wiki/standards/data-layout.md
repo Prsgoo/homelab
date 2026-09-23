@@ -24,6 +24,10 @@ $DATA_ROOT/
     minecraft-wings/ CT 401 - Wings config (symlinked to /etc/pterodactyl inside container)
     personal-apps/   CT 600 - personal apps
       actual-budget/   Actual Budget data
+      freshrss/        FreshRSS data
+      grimmory/        Grimmory data + MariaDB
+      grocy/           Grocy config
+      mealie/          Mealie data
   media-stack/
     media/         Shared media library
       tv/            Regular TV series (WEB-1080p)
@@ -59,7 +63,7 @@ Shows which LXC gets which $DATA_ROOT subdirectory and at what path inside the c
 | media-dl (CT 302) | `$DATA_ROOT/media-stack/usenet/` | `/usenet/` | Usenet download area (read/write) |
 | game-panel (CT 400) | `$DATA_ROOT/config/panel/` | `/data/` | Pterodactyl panel, MariaDB, Komodo Periphery |
 | minecraft-wings (CT 401) | `$DATA_ROOT/config/minecraft-wings/` | `/data/` | Wings config (via /etc/pterodactyl symlink) |
-| personal-apps (CT 600) | `$DATA_ROOT/config/personal-apps/` | `/data/` | Actual Budget data |
+| personal-apps (CT 600) | `$DATA_ROOT/config/personal-apps/` | `/data/` | Personal app configs (Actual Budget, Mealie, FreshRSS, Grimmory, Grocy) |
 | iot (CT 201) | `$DATA_ROOT/config/iot/` | `/data/` | homebridge, zigbee2mqtt, mosquitto configs |
 | monitoring (CT 202) | `$DATA_ROOT/config/monitoring/` | `/data/` | grafana, prometheus, pve-exporter configs |
 

@@ -65,4 +65,4 @@ root:1000:700
 
 ## Services
 
-→ [personal apps](../services/personal-apps/_index.md) - Actual Budget, Mealie, FreshRSS, Grimmory
+→ [personal apps](../services/personal-apps/_index.md) - Actual Budget, Mealie, FreshRSS, Grimmory, Grocy

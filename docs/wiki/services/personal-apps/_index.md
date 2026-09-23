@@ -12,3 +12,4 @@ LXC: [personal apps](../../lxcs/personal-apps.md)
 | Mealie | [mealie](mealie.md) | 9000 |
 | FreshRSS | [freshrss](freshrss.md) | 8080 |
 | Grimmory | [grimmory](grimmory.md) | 6060 |
+| Grocy | [grocy](grocy.md) | 9241 |
