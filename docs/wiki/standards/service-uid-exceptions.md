@@ -79,6 +79,24 @@ chown -R 100033:100033 $DATA_ROOT/config/personal-apps/freshrss/
 
 ---
 
+## Mealie - root (0:0 in container, remapped on host)
+
+**Why:** The official Mealie image (`ghcr.io/mealie-recipes/mealie`) has broken PUID/PGID support - the `change_user` function was disabled and the container runs as root (UID 0) regardless of env vars set. (Upstream issue #2845, fix merged in #2882 but reliability uncertain - do not rely on it.)
+
+**UID 1602** is reserved in the scheme but unused.
+
+**Host-side ownership:**
+```bash
+# CT 600 (personal-apps) - UID 0 inside LXC → remapped by idmap (typically host UID 100000)
+chown -R <remapped-root-uid>:<remapped-root-gid> $DATA_ROOT/config/personal-apps/mealie/
+```
+
+**What to set:**
+- No PUID/PGID in compose
+- Config dir owned by the host UID that container root maps to
+
+---
+
 ## Jellystat - named volume
 
 **Why:** Jellystat stores its database in a named Docker volume rather than a bind mount. UID 1311 is reserved in the scheme but there is no host-side directory to own.

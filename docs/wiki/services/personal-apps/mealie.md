@@ -15,6 +15,7 @@ Self-hosted recipe manager with meal planning and shopping list generation.
 | Image | `ghcr.io/mealie-recipes/mealie:latest` |
 | Port | 9000 |
 | Data | `/data/mealie` → `$DATA_ROOT/config/personal-apps/mealie` |
+| UID/GID | 1602 reserved, unused - PUID/PGID broken in official image, runs as root. See [exceptions](../../standards/service-uid-exceptions.md) |
 | Komodo stack | `mealie` |
 | Route | `https://mealie.home.example.com:<admin-port>` (admin-only) |
 

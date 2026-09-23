@@ -24,18 +24,20 @@ These GIDs **must be identical on the host and inside every LXC** that accesses 
 
 GIDs are set to the start of the UID range for that domain, so the numbering is self-consistent: IoT UIDs start at 1200 → iot GID is 1200, etc.
 
-| GID  | Group         | Purpose                                      | Used by             |
-| ---- | ------------- | -------------------------------------------- | ------------------- |
-| 1200 | `iot`         | IoT service shared data                      | iot (CT 201)        |
-| 1210 | `ultrafeeder` | ADS-B feeder data (single-service group)     | ultrafeeder (CT 200) only |
-| 1300 | `media`       | Shared media library (movies, TV, downloads) | CT 300 (media-arr), CT 301 (media-server), CT 302 (media-dl) |
-| 1400 | `gaming`      | Game server data                             | future game LXCs    |
+| GID  | Group            | Purpose                                      | Used by             |
+| ---- | ---------------- | -------------------------------------------- | ------------------- |
+| 1200 | `iot`            | IoT service shared data                      | iot (CT 201)        |
+| 1210 | `ultrafeeder`    | ADS-B feeder data (single-service group)     | ultrafeeder (CT 200) only |
+| 1300 | `media`          | Shared media library (movies, TV, downloads) | CT 300 (media-arr), CT 301 (media-server), CT 302 (media-dl) |
+| 1400 | `gaming`         | Game server data                             | future game LXCs    |
+| 1600 | `personal-apps`  | Personal app config access                   | CT 600 (personal-apps) |
 
 Create on host and in every LXC that needs the group:
 ```bash
 groupadd -g 1200 iot
 groupadd -g 1300 media
 groupadd -g 1400 gaming
+groupadd -g 1600 personal-apps
 ```
 
 ---
@@ -76,7 +78,11 @@ These only need to exist inside their own LXC **and on the host** (required for 
 | 1311 | `jellystat`   | Jellystat   | 1300 (`media`) | -            | CT 301 (media-server) - named volume, no bind mount, see [exceptions](service-uid-exceptions.md) |
 | 1307 | `sabnzbd`     | SABnzbd     | 1300 (`media`) | -            | CT 302 (media-dl)  |
 | 1320 | `qbittorrent` | qBittorrent | 1300 (`media`) | -            | CT 302 (media-dl)  |
-| 1001 | `actual-budget` | Actual Budget | private (1001) | -          | CT 600 (personal-apps) - UID hardcoded in image, see [exceptions](service-uid-exceptions.md) |
+| 1001 | `actual-budget` | Actual Budget | private (1001)         | -          | CT 600 (personal-apps) - UID hardcoded in image, see [exceptions](service-uid-exceptions.md) |
+| 1600 | `grimmory`      | Grimmory      | 1600 (`personal-apps`) | -          | CT 600 (personal-apps) |
+| 1601 | `grocy`         | Grocy         | 1600 (`personal-apps`) | -          | CT 600 (personal-apps) |
+| 1602 | `mealie`        | Mealie        | 1600 (`personal-apps`) | -          | CT 600 (personal-apps) - reserved, unused, see [exceptions](service-uid-exceptions.md) |
+| 1603 | `freshrss`      | FreshRSS      | 1600 (`personal-apps`) | -          | CT 600 (personal-apps) - reserved, unused, see [exceptions](service-uid-exceptions.md) |
 
 > Zigbee USB dongle access: the device is owned by group `iot` (GID 1200) via the Proxmox `dev0` config (`gid=1200`). zigbee2mqtt accesses it through its primary `iot` group membership - no `dialout` needed. See [lxc idmap](lxc-idmap.md) for why `dialout` (GID 20) cannot be used in an unprivileged LXC.
 
@@ -134,6 +140,7 @@ What you control at the OS level:
 | `$DATA_ROOT/config/media-server/jellyfin/` | `1310:1300` | 750 | jellyfin only |
 | `$DATA_ROOT/config/media-dl/sabnzbd/` | `1307:1300` | 750 | sabnzbd only |
 | `$DATA_ROOT/config/media-dl/qbittorrent/` | `1320:1300` | 750 | qbittorrent only |
+| `$DATA_ROOT/config/personal-apps/grocy/` | `1601:1600` | 750 | grocy only |
 
 ---
 
