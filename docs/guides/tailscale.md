@@ -208,7 +208,7 @@ pct exec <vmid> -- tailscale up --accept-dns=false  # add other flags as needed
 
 1. Confirm the route is approved in Tailscale admin console → Machines → management → Edit route settings
 2. Confirm CT 100 is running and Tailscale is up: `pct exec 100 -- tailscale status`
-3. Check that your device has a route to `<your-ip-range>` via the subnet router: `ip route | grep 192.168.50` (macOS: `netstat -nr | grep 192.168.50`)
+3. Check that your device has a route to `<your-ip-range>` via the subnet router: `ip route | grep 192.168.x` (macOS: `netstat -nr | grep 192.168.x`)
 
 **Admin services reachable from non-admin Tailscale devices**
 
