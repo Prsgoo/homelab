@@ -30,6 +30,14 @@ Standalone guides for services in CT 600. All depend on Komodo and Traefik.
 | [RSS Reader (FreshRSS)](freshrss.md) | Self-hosted RSS aggregator |
 | [Digital Library (Grimmory)](grimmory.md) | Ebook library with metadata and built-in reader |
 
+## Standards & Operations
+
+Reference guides for maintaining the homelab consistently.
+
+| Guide | Description |
+|-------|-------------|
+| [Adding a Service or CT](adding-a-service.md) | Checklist and step-by-step for adding new services without breaking standards |
+
 ## Guide structure
 
 Every guide follows the same format:
