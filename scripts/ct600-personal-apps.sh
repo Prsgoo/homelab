@@ -18,8 +18,10 @@ ct_exists $VMID || { echo "ERROR: CT $VMID not found. Create it first." >&2; exi
 
 echo ""
 echo "=== Users & groups ==="
+add_group 1300 media
 add_group 1600 personal-apps
 add_user  1600 1600 grimmory
+usermod -aG media grimmory
 add_user  1601 1600 grocy
 add_user  1602 1600 mealie
 add_user  1603 1600 freshrss
@@ -44,15 +46,23 @@ chown 1601:1600 $DATA_ROOT/config/personal-apps/grocy && chmod 750 $DATA_ROOT/co
 # FreshRSS runs as www-data (UID 33) - CT 600 maps UID 0-999 → host 100000+, so UID 33 → host 100033
 mkdir -p $DATA_ROOT/config/personal-apps/freshrss
 chown 100033:100033 $DATA_ROOT/config/personal-apps/freshrss && chmod 750 $DATA_ROOT/config/personal-apps/freshrss
-# Books media dir
-mkdir -p $DATA_ROOT/media-stack/media/books
-chown root:1600 $DATA_ROOT/media-stack/media/books && chmod 775 $DATA_ROOT/media-stack/media/books
+# Library media dirs - owned by media group; grimmory accesses via supplementary media group
+mkdir -p $DATA_ROOT/media-stack/media/library/{books,comics,manga}
+chown root:1300 $DATA_ROOT/media-stack/media/library && chmod 775 $DATA_ROOT/media-stack/media/library
+chown root:1300 \
+    $DATA_ROOT/media-stack/media/library/books \
+    $DATA_ROOT/media-stack/media/library/comics \
+    $DATA_ROOT/media-stack/media/library/manga
+chmod 775 \
+    $DATA_ROOT/media-stack/media/library/books \
+    $DATA_ROOT/media-stack/media/library/comics \
+    $DATA_ROOT/media-stack/media/library/manga
 echo "  done"
 
 echo ""
 echo "=== LXC conf patches ==="
 set_mp $VMID -mp0 $DATA_ROOT/config/personal-apps,mp=/data
-set_mp $VMID -mp1 $DATA_ROOT/media-stack/media/books,mp=/books
+set_mp $VMID -mp1 $DATA_ROOT/media-stack/media/library,mp=/library
 
 patch_conf $VMID "lxc.idmap" "lxc.idmap: u 0 100000 1000
 lxc.idmap: u 1000 1000 700

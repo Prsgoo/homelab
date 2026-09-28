@@ -27,7 +27,7 @@ Personal tools. All services are admin-only - not shared with other users.
 | Mount | Host Path | Container Path |
 |-------|-----------|---------------|
 | mp0 | `$DATA_ROOT/config/personal-apps` | `/data` |
-| mp1 | `$DATA_ROOT/media-stack/media/books` | `/books` |
+| mp1 | `$DATA_ROOT/media-stack/media/library` | `/library` |
 
 ## UID Scheme
 
@@ -36,7 +36,7 @@ CT 600 uses the 1600–1699 range per the [UID/GID standards](../standards/user-
 | UID/GID | User | Group | Used by |
 |---------|------|-------|---------|
 | 1001 | actual-budget | - | Actual Budget - UID hardcoded in image, see [exceptions](../standards/service-uid-exceptions.md) |
-| 1600 | grimmory | personal-apps | Grimmory app + MariaDB |
+| 1600 | grimmory | personal-apps + media (supplementary) | Grimmory app + MariaDB |
 | 1601 | grocy | personal-apps | Grocy |
 | 1602 | mealie | personal-apps | Mealie - reserved, image runs as mealie user (911), see [exceptions](../standards/service-uid-exceptions.md) |
 | 1603 | freshrss | personal-apps | FreshRSS - reserved, image runs as www-data (33), see [exceptions](../standards/service-uid-exceptions.md) |
