@@ -73,11 +73,12 @@ These only need to exist inside their own LXC **and on the host** (required for 
 | 1304 | `seerr`       | Seerr       | 1300 (`media`) | -            | CT 300 (media-arr) - UID unused, see [exceptions](service-uid-exceptions.md) |
 | 1305 | `unpackerr`   | Unpackerr   | 1300 (`media`) | -            | CT 300 (media-arr) |
 | 1306 | `recyclarr`   | Recyclarr   | 1300 (`media`) | -            | CT 300 (media-arr) |
-| 1308 | `dispatcharr` | Dispatcharr | 1300 (`media`) | -            | CT 300 (media-arr) - UID unused, see [exceptions](service-uid-exceptions.md) |
+| 1307 | `dispatcharr` | Dispatcharr | 1300 (`media`) | -            | CT 300 (media-arr) - UID unused, see [exceptions](service-uid-exceptions.md) |
+| 1308 | `flaresolverr` | FlareSolverr | 1300 (`media`) | -           | CT 300 (media-arr) - UID unused, see [exceptions](service-uid-exceptions.md) |
 | 1310 | `jellyfin`    | Jellyfin    | 1300 (`media`) | -            | CT 301 (media-server) |
 | 1311 | `jellystat`   | Jellystat   | 1300 (`media`) | -            | CT 301 (media-server) - named volume, no bind mount, see [exceptions](service-uid-exceptions.md) |
-| 1307 | `sabnzbd`     | SABnzbd     | 1300 (`media`) | -            | CT 302 (media-dl)  |
 | 1320 | `qbittorrent` | qBittorrent | 1300 (`media`) | -            | CT 302 (media-dl)  |
+| 1321 | `sabnzbd`     | SABnzbd     | 1300 (`media`) | -            | CT 302 (media-dl)  |
 | 1001 | `actual-budget` | Actual Budget | private (1001)         | -          | CT 600 (personal-apps) - UID hardcoded in image, see [exceptions](service-uid-exceptions.md) |
 | 1600 | `grimmory`      | Grimmory      | 1600 (`personal-apps`) | -          | CT 600 (personal-apps) |
 | 1601 | `grocy`         | Grocy         | 1600 (`personal-apps`) | -          | CT 600 (personal-apps) |
@@ -138,9 +139,12 @@ What you control at the OS level:
 | `$DATA_ROOT/config/media-arr/dispatcharr/` | `100000:100000` | 750 | dispatcharr (aio image, container-root - ignores PUID/PGID) |
 | `$DATA_ROOT/config/media-server/` | `100000:1300` | 750 | container root traversal + media group |
 | `$DATA_ROOT/config/media-server/jellyfin/` | `1310:1300` | 750 | jellyfin only |
-| `$DATA_ROOT/config/media-dl/sabnzbd/` | `1307:1300` | 750 | sabnzbd only |
+| `$DATA_ROOT/config/media-dl/sabnzbd/` | `1321:1300` | 750 | sabnzbd only |
 | `$DATA_ROOT/config/media-dl/qbittorrent/` | `1320:1300` | 750 | qbittorrent only |
+| `$DATA_ROOT/config/personal-apps/actual-budget/` | `1001:1001` | 750 | actual-budget (hardcoded UID 1001) |
+| `$DATA_ROOT/config/personal-apps/mealie/` | `100911:100911` | 750 | mealie (internal mealie user UID 911 → host 100911) |
 | `$DATA_ROOT/config/personal-apps/grocy/` | `1601:1600` | 750 | grocy only |
+| `$DATA_ROOT/config/personal-apps/freshrss/` | `100033:100033` | 750 | freshrss (www-data UID 33 → host 100033) |
 
 ---
 

@@ -118,10 +118,22 @@ useradd -u 1300 -g 1300 -s /bin/false -d /nonexistent sonarr
 useradd -u 1301 -g 1300 -s /bin/false -d /nonexistent radarr
 useradd -u 1302 -g 1300 -s /bin/false -d /nonexistent prowlarr
 useradd -u 1303 -g 1300 -s /bin/false -d /nonexistent bazarr
+useradd -u 1304 -g 1300 -s /bin/false -d /nonexistent seerr
 useradd -u 1305 -g 1300 -s /bin/false -d /nonexistent unpackerr
 useradd -u 1306 -g 1300 -s /bin/false -d /nonexistent recyclarr
+useradd -u 1307 -g 1300 -s /bin/false -d /nonexistent dispatcharr
+useradd -u 1308 -g 1300 -s /bin/false -d /nonexistent flaresolverr
 useradd -u 1310 -g 1300 -s /bin/false -d /nonexistent jellyfin
+useradd -u 1311 -g 1300 -s /bin/false -d /nonexistent jellystat
 useradd -u 1320 -g 1300 -s /bin/false -d /nonexistent qbittorrent
+useradd -u 1321 -g 1300 -s /bin/false -d /nonexistent sabnzbd
+
+# Personal apps (1600–1699)
+groupadd -g 1600 personal-apps
+useradd -u 1600 -g 1600 -s /bin/false -d /nonexistent grimmory
+useradd -u 1601 -g 1600 -s /bin/false -d /nonexistent grocy
+useradd -u 1602 -g 1600 -s /bin/false -d /nonexistent mealie
+useradd -u 1603 -g 1600 -s /bin/false -d /nonexistent freshrss
 ```
 
 Add new rows here as new services are added (see [user group scheme](user-group-scheme.md)).

@@ -35,7 +35,11 @@ CT 600 uses the 1600–1699 range per the [UID/GID standards](../standards/user-
 
 | UID/GID | User | Group | Used by |
 |---------|------|-------|---------|
+| 1001 | actual-budget | - | Actual Budget - UID hardcoded in image, see [exceptions](../standards/service-uid-exceptions.md) |
 | 1600 | grimmory | personal-apps | Grimmory app + MariaDB |
+| 1601 | grocy | personal-apps | Grocy |
+| 1602 | mealie | personal-apps | Mealie - reserved, image runs as mealie user (911), see [exceptions](../standards/service-uid-exceptions.md) |
+| 1603 | freshrss | personal-apps | FreshRSS - reserved, image runs as www-data (33), see [exceptions](../standards/service-uid-exceptions.md) |
 
 ## idmap
 

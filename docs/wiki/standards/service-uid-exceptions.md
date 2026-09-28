@@ -17,11 +17,15 @@ Most services follow the [UID/GID scheme](user-group-scheme.md): a reserved UID 
 
 **Host-side ownership:**
 
-Container UID 1000 maps through the media-arr idmap. Under the default idmap (UIDs 0–999 → 100000+), UID 1000 maps to host UID 101000. Check your specific idmap config for the exact offset.
+CT 300 maps UIDs 1000–1499 1:1 to the host, so container UID 1000 = host UID 1000.
+
+```bash
+chown -R 1000:1000 $DATA_ROOT/config/media-arr/seerr/
+```
 
 **What to set:**
 - No PUID/PGID in compose
-- Pre-create config dir with the correct mapped UID on the host
+- Pre-create config dir owned `1000:1000` on host
 
 ---
 
@@ -29,7 +33,7 @@ Container UID 1000 maps through the media-arr idmap. Under the default idmap (UI
 
 **Why:** The AIO image (`DISPATCHARR_ENV=aio`) bundles backend, frontend, and EPG processor in a single container and runs the whole stack as root. PUID/PGID are ignored.
 
-**UID 1308** is reserved in the scheme but unused.
+**UID 1307** is reserved in the scheme but unused.
 
 **Host-side ownership:**
 ```bash
@@ -79,21 +83,36 @@ chown -R 100033:100033 $DATA_ROOT/config/personal-apps/freshrss/
 
 ---
 
-## Mealie - root (0:0 in container, remapped on host)
+## Mealie - mealie user (911:911)
 
-**Why:** The official Mealie image (`ghcr.io/mealie-recipes/mealie`) has broken PUID/PGID support - the `change_user` function was disabled and the container runs as root (UID 0) regardless of env vars set. (Upstream issue #2845, fix merged in #2882 but reliability uncertain - do not rely on it.)
+**Why:** The official Mealie image runs as an internal `mealie` user at UID 911. It does not support PUID/PGID. The UID falls outside both the media range (1300s) and the personal-apps range (1600s).
 
 **UID 1602** is reserved in the scheme but unused.
 
 **Host-side ownership:**
+
+UID 911 falls in the 0–999 range; CT 600 maps those to 100000+, so container UID 911 → host UID 100911.
+
 ```bash
-# CT 600 (personal-apps) - UID 0 inside LXC → remapped by idmap (typically host UID 100000)
-chown -R <remapped-root-uid>:<remapped-root-gid> $DATA_ROOT/config/personal-apps/mealie/
+chown -R 100911:100911 $DATA_ROOT/config/personal-apps/mealie/
 ```
 
 **What to set:**
 - No PUID/PGID in compose
-- Config dir owned by the host UID that container root maps to
+- Config dir owned `100911:100911` on host
+
+---
+
+## FlareSolverr - stateless (no config mount)
+
+**Why:** FlareSolverr is a stateless Cloudflare bypass proxy. It has no PUID/PGID support and requires no persistent config directory - there is nothing to bind-mount.
+
+**UID 1308** is reserved in the scheme but unused.
+
+**What to set:**
+- No PUID/PGID in compose
+- No config bind mount; no host-side directory to chown
+- UID 1308 system user is still created on the host and inside CT 300 for normalization
 
 ---
 

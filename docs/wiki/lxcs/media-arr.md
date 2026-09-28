@@ -61,8 +61,8 @@ Container UIDs 1000–1499 map 1:1 to host UIDs 1000–1499.
 | 1304 | Seerr | Reserved - image runs as UID 1000 (node), ignores PUID |
 | 1305 | Unpackerr | |
 | 1306 | Recyclarr | |
-| 1307 | SABnzbd | (used by CT 302 for cross-LXC consistency) |
-| 1308 | Dispatcharr | Reserved - AIO image runs as root, ignores PUID |
+| 1307 | Dispatcharr | Reserved - AIO image runs as root, ignores PUID |
+| 1308 | FlareSolverr | Reserved - stateless, no PUID/PGID, no config mount |
 
 ## Komodo
 
