@@ -20,6 +20,7 @@ echo ""
 echo "=== Users & groups ==="
 add_group 1300 media
 add_user  1310 1300 jellyfin
+add_user  1311 1300 jellystat
 
 echo ""
 echo "=== Data directory ownership ==="

@@ -1,5 +1,5 @@
 #!/bin/bash
-# CT 600 - personal-apps (Actual Budget, Mealie, FreshRSS, Grimmory)
+# CT 600 - personal-apps (Actual Budget, Mealie, FreshRSS, Grimmory, Grocy)
 # Run as root on the Proxmox host after creating CT 600.
 # Usage: Fill in scripts/.env, then: ./ct600-personal-apps.sh
 set -euo pipefail
@@ -20,6 +20,9 @@ echo ""
 echo "=== Users & groups ==="
 add_group 1600 personal-apps
 add_user  1600 1600 grimmory
+add_user  1601 1600 grocy
+add_user  1602 1600 mealie
+add_user  1603 1600 freshrss
 
 echo ""
 echo "=== Data directory ownership ==="
@@ -35,6 +38,12 @@ mkdir -p $DATA_ROOT/config/personal-apps/grimmory/{data,db,bookdrop}
 chown 1600:1600 $DATA_ROOT/config/personal-apps/grimmory/data    && chmod 750 $DATA_ROOT/config/personal-apps/grimmory/data
 chown 1600:1600 $DATA_ROOT/config/personal-apps/grimmory/db      && chmod 750 $DATA_ROOT/config/personal-apps/grimmory/db
 chown 1600:1600 $DATA_ROOT/config/personal-apps/grimmory/bookdrop && chmod 750 $DATA_ROOT/config/personal-apps/grimmory/bookdrop
+# Grocy UID 1601 (personal-apps group)
+mkdir -p $DATA_ROOT/config/personal-apps/grocy
+chown 1601:1600 $DATA_ROOT/config/personal-apps/grocy && chmod 750 $DATA_ROOT/config/personal-apps/grocy
+# FreshRSS runs as www-data (UID 33) - CT 600 maps UID 0-999 → host 100000+, so UID 33 → host 100033
+mkdir -p $DATA_ROOT/config/personal-apps/freshrss
+chown 100033:100033 $DATA_ROOT/config/personal-apps/freshrss && chmod 750 $DATA_ROOT/config/personal-apps/freshrss
 # Books media dir
 mkdir -p $DATA_ROOT/media-stack/media/books
 chown root:1600 $DATA_ROOT/media-stack/media/books && chmod 775 $DATA_ROOT/media-stack/media/books
@@ -56,6 +65,8 @@ echo ""
 echo "=== Stack files ==="
 deploy_stack "$STACKS_DIR/actual-budget" "personal-apps/actual-budget"
 deploy_stack "$STACKS_DIR/mealie"        "personal-apps/mealie"
+deploy_stack "$STACKS_DIR/grocy"         "personal-apps/grocy"
+deploy_stack "$STACKS_DIR/freshrss"      "personal-apps/freshrss"
 deploy_stack "$STACKS_DIR/grimmory"      "personal-apps/grimmory" GRIMMORY_DB_PASSWORD GRIMMORY_DB_ROOT_PASSWORD
 
 start_and_install_periphery $VMID /data/komodo

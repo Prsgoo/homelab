@@ -23,8 +23,11 @@ add_user  1300 1300 sonarr
 add_user  1301 1300 radarr
 add_user  1302 1300 prowlarr
 add_user  1303 1300 bazarr
+add_user  1304 1300 seerr
 add_user  1305 1300 unpackerr
 add_user  1306 1300 recyclarr
+add_user  1307 1300 dispatcharr
+add_user  1308 1300 flaresolverr
 
 echo ""
 echo "=== Data directory ownership ==="
