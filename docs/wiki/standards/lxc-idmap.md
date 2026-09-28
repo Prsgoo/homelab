@@ -127,6 +127,9 @@ useradd -u 1310 -g 1300 -s /bin/false -d /nonexistent jellyfin
 useradd -u 1311 -g 1300 -s /bin/false -d /nonexistent jellystat
 useradd -u 1320 -g 1300 -s /bin/false -d /nonexistent qbittorrent
 useradd -u 1321 -g 1300 -s /bin/false -d /nonexistent sabnzbd
+useradd -u 1330 -g 1300 -s /bin/false -d /nonexistent suwayomi
+useradd -u 1331 -g 1300 -s /bin/false -d /nonexistent komga
+useradd -u 1332 -g 1300 -s /bin/false -d /nonexistent komf
 
 # Personal apps (1600–1699)
 groupadd -g 1600 personal-apps
@@ -172,7 +175,7 @@ Also add the `userns` feature flag to allow the override (if not already present
 | minecraft-wings (400-range) | No | Wings runs as root; bind mounts owned by container root (host UID 100000) |
 | docker-iot (200-range) | Yes | Service users own config dirs on $DATA_ROOT |
 | ultrafeeder (200-range) | Yes | Service user owns data dir on $DATA_ROOT |
-| media-lxc (300-range) | Yes | Service users own config dirs, shared media |
+| media-lxc (300-range, including CT 303) | Yes | Service users own config dirs, shared media |
 
 **Rule:** any LXC with a bind mount where a non-root service user needs write access → add the idmap block.
 

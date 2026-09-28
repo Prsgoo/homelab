@@ -51,12 +51,13 @@ echo ""
 echo "=== [2/4] Directory tree ==="
 
 # Config dirs - one per LXC
-for dir in management ultrafeeder iot monitoring media-arr media-server media-dl panel minecraft-wings personal-apps; do
+for dir in management ultrafeeder iot monitoring media-arr media-server media-dl media-read panel minecraft-wings personal-apps; do
     mkdir -p "$DATA_ROOT/config/$dir"
 done
 
-# Media stack - shared across CT 300, 301, 302
+# Media stack - shared across CT 300, 301, 302, 600
 for dir in media/tv media/anime media/movies media/movies-4k \
+           media/library/books media/library/comics media/library/manga \
            torrents/tv torrents/movies \
            usenet/complete/tv usenet/complete/movies usenet/incomplete; do
     mkdir -p "$DATA_ROOT/media-stack/$dir"
@@ -68,6 +69,7 @@ mkdir -p "$DATA_ROOT/config/iot"/{homebridge,zigbee2mqtt,mosquitto}
 mkdir -p "$DATA_ROOT/config/media-arr"/{sonarr,radarr,prowlarr,bazarr,seerr,dispatcharr,unpackerr,recyclarr}
 mkdir -p "$DATA_ROOT/config/media-server/jellyfin"
 mkdir -p "$DATA_ROOT/config/media-dl"/{qbittorrent,sabnzbd}
+mkdir -p "$DATA_ROOT/config/media-read"/{suwayomi,komga,komf}
 mkdir -p "$DATA_ROOT/config/personal-apps/actual-budget"
 
 # Game server data - Wings bind-mounts these
@@ -84,6 +86,7 @@ add_group 1200 iot
 add_group 1210 ultrafeeder
 add_group 1300 media
 add_group 1400 gaming
+add_group 1600 personal-apps
 
 echo ""
 echo "=== [4/4] Zigbee udev rule ==="

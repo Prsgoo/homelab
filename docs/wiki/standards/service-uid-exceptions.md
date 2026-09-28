@@ -9,6 +9,26 @@ Most services follow the [UID/GID scheme](user-group-scheme.md): a reserved UID 
 
 ---
 
+## Suwayomi - suwayomi user (1000:1000)
+
+**Why:** The Suwayomi image hardcodes an internal `suwayomi` user at UID 1000. It does not support PUID/PGID.
+
+**UID 1330** is reserved in the scheme but unused.
+
+**Host-side ownership:**
+```bash
+# CT 303 (media-read) - UID 1000 falls in the 1:1 passthrough range (1000–1499), so host UID = 1000
+# GID 1300 (media) is needed for write access to /manga
+chown -R 1000:1300 $DATA_ROOT/config/media-read/suwayomi/
+```
+
+**What to set:**
+- `user: "1000:1300"` in compose - overrides GID to media group so Suwayomi can write to `/manga`
+- Config dir owned `1000:1300` on host
+- After first boot, set download path to `/manga` in Suwayomi Settings > Downloads
+
+---
+
 ## Seerr - node (1000:1000)
 
 **Why:** The Seerr image is a Node.js app that runs as the built-in `node` user (UID 1000). It does not read PUID/PGID.
@@ -16,10 +36,8 @@ Most services follow the [UID/GID scheme](user-group-scheme.md): a reserved UID 
 **UID 1304** is reserved in the scheme but unused.
 
 **Host-side ownership:**
-
-CT 300 maps UIDs 1000–1499 1:1 to the host, so container UID 1000 = host UID 1000.
-
 ```bash
+# CT 300 media-arr - UID 1000 falls in the 1:1 passthrough range (1000–1499), so host UID = 1000
 chown -R 1000:1000 $DATA_ROOT/config/media-arr/seerr/
 ```
 
@@ -37,13 +55,13 @@ chown -R 1000:1000 $DATA_ROOT/config/media-arr/seerr/
 
 **Host-side ownership:**
 ```bash
-# Runs as container root (UID 0) → remapped by idmap
-chown -R <remapped-root-uid>:<remapped-root-gid> $DATA_ROOT/config/media-arr/dispatcharr/
+# Runs as container root (UID 0) → host UID 100000 via idmap
+chown -R 100000:100000 $DATA_ROOT/config/media-arr/dispatcharr/
 ```
 
 **What to set:**
 - No PUID/PGID in compose
-- Config dir owned by the host UID that container root maps to
+- Config dir owned `100000:100000` on host
 
 ---
 
@@ -71,7 +89,7 @@ chown -R 1001:1001 $DATA_ROOT/config/personal-apps/actual-budget/
 
 **Host-side ownership:**
 
-UID 33 falls in the default remapped range. Under a typical unprivileged LXC idmap, container UID 33 → host UID 100033.
+CT 600 uses the same 1:1 passthrough idmap for UIDs 1000–1699, but UID 33 falls in the default remapped range (0–999 → 100000+). Container UID 33 → host UID 100033.
 
 ```bash
 chown -R 100033:100033 $DATA_ROOT/config/personal-apps/freshrss/
@@ -79,21 +97,19 @@ chown -R 100033:100033 $DATA_ROOT/config/personal-apps/freshrss/
 
 **What to set:**
 - No PUID/PGID in compose
-- Config dir owned `100033:100033` on host (verify against your idmap)
+- Config dir owned `100033:100033` on host
 
 ---
 
 ## Mealie - mealie user (911:911)
 
-**Why:** The official Mealie image runs as an internal `mealie` user at UID 911. It does not support PUID/PGID. The UID falls outside both the media range (1300s) and the personal-apps range (1600s).
+**Why:** The official Mealie image (`ghcr.io/mealie-recipes/mealie`) runs as an internal `mealie` user at UID 911. It does not support PUID/PGID. The UID falls outside both the media range (1300s) and the personal-apps range (1600s).
 
 **UID 1602** is reserved in the scheme but unused.
 
 **Host-side ownership:**
-
-UID 911 falls in the 0–999 range; CT 600 maps those to 100000+, so container UID 911 → host UID 100911.
-
 ```bash
+# CT 600 (personal-apps) - UID 911 falls in the 0-999 range → host UID 100911 via idmap
 chown -R 100911:100911 $DATA_ROOT/config/personal-apps/mealie/
 ```
 
@@ -120,7 +136,7 @@ chown -R 100911:100911 $DATA_ROOT/config/personal-apps/mealie/
 
 **Why:** Jellystat stores its database in a named Docker volume rather than a bind mount. UID 1311 is reserved in the scheme but there is no host-side directory to own.
 
-**Implication:** The data survives container restarts but not rootfs recreation. If the LXC is rebuilt from scratch, the named volume is lost. Back up before any rootfs changes:
+**Implication:** The data survives container restarts but not rootfs recreation. If CT 301 is rebuilt from scratch, the named volume is lost. Back up before any rootfs changes:
 
 ```bash
 docker exec jellystat-db pg_dump -U jellystat jellystat > jellystat-backup.sql
@@ -130,4 +146,4 @@ docker exec jellystat-db pg_dump -U jellystat jellystat > jellystat-backup.sql
 
 ## Management LXC - root
 
-Komodo Core and Traefik run as root (Docker socket access, ports 80/443). The management LXC does not use the per-service user pattern at all. See [user/group scheme](user-group-scheme.md) for context.
+Komodo Core and Traefik run as root (Docker socket access, ports 80/443). CT 100 does not use the per-service user pattern at all. See [user/group scheme](user-group-scheme.md) for context.

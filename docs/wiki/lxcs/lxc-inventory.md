@@ -17,6 +17,7 @@ updated: 2026-09-13
 | 300 | media-arr | `<media-arr-ip>` | local-lvm | 12GB | yes | Sonarr, Radarr, Prowlarr, Bazarr, Seerr, Flaresolverr, Unpackerr, Recyclarr, Dispatcharr |
 | 301 | media-server | `<media-server-ip>` | local-lvm | 8GB | yes | Jellyfin + Jellystat media server stack |
 | 302 | media-dl | `<media-dl-ip>` | local-lvm | 8GB | yes | qBittorrent + SABnzbd |
+| 303 | media-read | `<server-ip>` | local-lvm | 8GB | yes | Manga reading stack: Suwayomi, Komga, Komf |
 | 400 | game-panel | `<panel-ip>` | local-lvm | 8GB | no | Pterodactyl panel + MariaDB - on-demand, start manually |
 | 401 | minecraft-wings | `<wings-ip>` | local-lvm | 16GB | no | Pterodactyl Wings + Docker - on-demand, start manually |
 | 600 | personal-apps | `<personal-apps-ip>` | local-lvm | 8GB | yes | Personal apps: Actual Budget, Mealie, FreshRSS, Grimmory |
@@ -40,12 +41,14 @@ updated: 2026-09-13
 | 302 | media-dl | mp0 | `$DATA_ROOT/config/media-dl` | `/data` |
 | 302 | media-dl | mp1 | `$DATA_ROOT/media-stack/torrents` | `/torrents` |
 | 302 | media-dl | mp2 | `$DATA_ROOT/media-stack/usenet` | `/usenet` |
+| 303 | media-read | mp0 | `$DATA_ROOT/config/media-read` | `/data` |
+| 303 | media-read | mp1 | `$DATA_ROOT/media-stack/media/library/manga` | `/manga` |
 | 400 | game-panel | mp0 | `$DATA_ROOT/config/panel` | `/data` |
 | 401 | minecraft-wings | mp0 | `$DATA_ROOT/config/minecraft-wings` | `/data` |
 | 401 | minecraft-wings | mp1 | `$DATA_ROOT/minecraft/volumes` | `/var/lib/pterodactyl/volumes` |
 | 401 | minecraft-wings | mp2 | `$DATA_ROOT/minecraft/backups` | `/var/lib/pterodactyl/backups` |
 | 600 | personal-apps | mp0 | `$DATA_ROOT/config/personal-apps` | `/data` |
-| 600 | personal-apps | mp1 | `$DATA_ROOT/media-stack/media/books` | `/books` |
+| 600 | personal-apps | mp1 | `$DATA_ROOT/media-stack/media/library` | `/library` |
 
 ## OS Standard
 
@@ -65,6 +68,6 @@ All LXCs use **Debian 13 (trixie)** - `debian-13-standard_13.1-2_amd64.tar.zst`.
 
 ## Key Takeaways
 
-- 11 containers total, all rootfs on local-lvm: 100, 101, 200, 201, 202, 300, 301, 302, 400, 401, 600
+- 12 containers total, all rootfs on local-lvm: 100, 101, 200, 201, 202, 300, 301, 302, 303, 400, 401, 600
 - CT 400 and CT 401 are on-demand (onboot=no) - start manually when gaming sessions are needed
 - Storage pool assignments and thin pool usage: see [storage layout](../storage/storage-layout.md)

@@ -16,6 +16,7 @@ Service-level reference, grouped by the LXC they run in. Each subfolder covers a
 | media-arr (CT 300) | [media-arr/](../media-arr/_index/.md) | Sonarr, Radarr, Prowlarr, Bazarr, Seerr, Dispatcharr, Recyclarr, Unpackerr, FlareSolverr |
 | media-server (CT 301) | [media-server/](../media-server/_index/.md) | Jellyfin, Jellystat |
 | media-dl (CT 302) | [media-dl/](../media-dl/_index/.md) | qBittorrent, SABnzbd |
+| media-read (CT 303) | [media-read/](_index.md) | Suwayomi, Komga, Komf |
 | game-panel (CT 400) | [game-panel/](../game-panel/_index/.md) | Pterodactyl Panel |
 | minecraft-wings (CT 401) | [minecraft-wings/](../minecraft-wings/_index/.md) | Pterodactyl Wings |
 | personal-apps (CT 600) | [personal-apps/](../personal-apps/_index/.md) | Actual Budget, Mealie |

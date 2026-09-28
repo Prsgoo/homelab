@@ -1,0 +1,51 @@
+networks:
+  media-read:
+    driver: bridge
+
+services:
+  suwayomi:
+    image: ghcr.io/suwayomi/suwayomi-server:latest
+    container_name: suwayomi
+    restart: unless-stopped
+    # Image hardcodes UID 1000; override GID to 1300 (media) for write access to /manga
+    user: "1000:1300"
+    environment:
+      - TZ=Europe/Madrid
+      - DOWNLOAD_AS_CBZ=true
+    volumes:
+      - /manga:/manga
+      - /data/suwayomi:/home/suwayomi/.local/share/Tachidesk
+    ports:
+      - "4567:4567"
+    networks:
+      - media-read
+
+  komga:
+    image: gotson/komga:latest
+    container_name: komga
+    restart: unless-stopped
+    user: "1331:1300"
+    environment:
+      - TZ=Europe/Madrid
+    volumes:
+      - /data/komga:/config
+      - /manga:/manga:ro
+    ports:
+      - "25600:25600"
+    networks:
+      - media-read
+
+  komf:
+    image: sndxr/komf:latest
+    container_name: komf
+    restart: unless-stopped
+    user: "1332:1300"
+    environment:
+      - TZ=Europe/Madrid
+      - KOMF_KOMGA_BASE_URI=http://komga:8080
+      - KOMF_KOMGA_USERNAME=${KOMGA_USER}
+      - KOMF_KOMGA_PASSWORD=${KOMGA_PASSWORD}
+    volumes:
+      - /data/komf:/config
+    networks:
+      - media-read
