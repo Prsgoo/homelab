@@ -9,7 +9,7 @@ updated: 2026-09-29
 
 ## Suwayomi
 
-Manga downloader and reader. Downloads from online sources, stores as CBZ archives.
+Manga downloader and server. Downloads from online sources (MangaDex, Weeb Central, etc.), stores as CBZ archives, and serves via OPDS.
 
 | Setting | Value |
 |---------|-------|
@@ -20,34 +20,10 @@ Manga downloader and reader. Downloads from online sources, stores as CBZ archiv
 | Config | `/data/suwayomi` → `/home/suwayomi/.local/share/Tachidesk` |
 | Downloads | `/manga` |
 
-**Download path**: After first boot, go to Settings > Downloads and set the path to `/manga`. Enable CBZ format (also set via `DOWNLOAD_AS_CBZ=true` env var).
+**Download path**: Go to Settings > Downloads and set the path to `/manga`. CBZ format enabled via `DOWNLOAD_AS_CBZ=true` env var.
 
-## Komga
+**Download structure**: Suwayomi organizes downloads as `/manga/mangas/<Source Name>/<Manga Title>/<Chapter>.cbz`. In Grimmory, add each source subfolder (`/library/manga/mangas/<Source Name>/`) as a separate folder within the manga library.
 
-Manga library server and OPDS catalog.
+**OPDS**: Suwayomi exposes an OPDS feed at `http://<server-ip>:4567/api/opds/v1.2/catalog` - reading apps can connect here and read chapters on-demand without downloading.
 
-| Setting | Value |
-|---------|-------|
-| Image | `gotson/komga:latest` |
-| Port | 25600 |
-| UID:GID | `1331:1300` |
-| Config | `/data/komga` |
-| Library | `/manga` (read-only) |
-
-**Library setup**: After first boot, add `/manga` as a library in Komga's web UI. Komga scans CBZ files and generates metadata.
-
-**OPDS feed**: `http://komga.home.<domain>/opds/v1.2/catalog` - use this in Aidoku or any OPDS reader.
-
-## Komf
-
-Metadata enricher. Connects to Komga and writes `ComicInfo.xml` into CBZ archives using AniList, MangaUpdates, and MAL as sources.
-
-| Setting | Value |
-|---------|-------|
-| Image | `sndxr/komf:latest` |
-| UID:GID | `1332:1300` |
-| Config | `/data/komf` |
-
-**Komga connection**: configured via `KOMF_KOMGA_BASE_URI`, `KOMF_KOMGA_USERNAME`, `KOMF_KOMGA_PASSWORD` env vars in compose `.env`.
-
-Komf runs as a background service and processes libraries automatically. It can also be triggered via its REST API.
+**DNS override**: Suwayomi uses `dns: [1.1.1.1, 8.8.8.8]` in compose to bypass Pi-hole, which blocks some manga source domains.

@@ -325,6 +325,10 @@ pages:
                   - title: SABnzbd
                     url: https://sabnzbd.<your-domain>:8443
                     icon: di:sabnzbd
+              - links:
+                  - title: Suwayomi
+                    url: https://manga-reader.<your-domain>:8443
+                    icon: di:suwayomi
 
           - type: bookmarks
             title: Personal

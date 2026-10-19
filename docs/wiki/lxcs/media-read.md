@@ -5,7 +5,7 @@ updated: 2026-09-29
 
 # Media Read LXC (CT 303)
 
-Manga reading stack. Suwayomi downloads and serves manga; Komga organizes the library and provides OPDS; Komf enriches metadata from AniList/MangaUpdates.
+Manga stack. Suwayomi downloads from online sources and serves manga via OPDS. Downloaded CBZ files land on the shared media pool where Grimmory (CT 600) can also read them.
 
 ## Specs
 
@@ -29,7 +29,7 @@ Manga reading stack. Suwayomi downloads and serves manga; Komga organizes the li
 | mp0 | `$DATA_ROOT/config/media-read` | `/data` |
 | mp1 | `$DATA_ROOT/media-stack/media/library/manga` | `/manga` |
 
-Suwayomi downloads CBZ files to `/manga`. Komga scans `/manga` as a read-only library.
+Suwayomi downloads CBZ files to `/manga`. This is the same physical path as `/library/manga` in CT 600.
 
 ## UID Scheme
 
@@ -38,8 +38,8 @@ CT 303 uses the 1330–1339 block per the [UID/GID standards](../standards/user-
 | UID  | User      | Used by   | Note |
 |------|-----------|-----------|------|
 | 1330 | suwayomi  | Suwayomi  | Reserved; image hardcodes UID 1000, see [exceptions](../standards/service-uid-exceptions.md) |
-| 1331 | komga     | Komga     | `user: "1331:1300"` in compose |
-| 1332 | komf      | Komf      | `user: "1332:1300"` in compose |
+| 1331 | komga     | (reserved) | Unused - kept for UID normalization |
+| 1332 | komf      | (reserved) | Unused - kept for UID normalization |
 
 All users have primary GID 1300 (`media`).
 
@@ -49,8 +49,6 @@ Config dir ownership on host:
 |------|-------|------|
 | `$DATA_ROOT/config/media-read/` | `100000:1300` | 750 |
 | `$DATA_ROOT/config/media-read/suwayomi/` | `1000:1300` | 750 |
-| `$DATA_ROOT/config/media-read/komga/` | `1331:1300` | 750 |
-| `$DATA_ROOT/config/media-read/komf/` | `1332:1300` | 750 |
 
 ## idmap
 
@@ -82,18 +80,14 @@ root:1000:500
 
 | Service | Internal URL | Route |
 |---------|-------------|-------|
-| Suwayomi | `http://<server-ip>:4567` | `manga-reader.home.<your-domain>` |
-| Komga | `http://<server-ip>:25600` | `komga.home.<your-domain>` |
-
-Komf is internal only (connects to Komga via Docker network).
+| Suwayomi | `http://<server-ip>:4567` | `manga-reader.home.<your-domain>` (admin entrypoint) |
 
 ## Services
 
-→ [media-read services](../services/media-read/_index.md) - Suwayomi, Komga, Komf
+→ [media-read services](../services/media-read/_index.md)
 
 ## Post-Setup Steps
 
-1. Open Komga, create an admin account.
-2. Add `/manga` as a library in Komga.
-3. Open Suwayomi, install a source extension, configure download path to `/manga` in Settings > Downloads.
-4. Komf connects automatically using `KOMGA_USER`/`KOMGA_PASSWORD` env vars in compose `.env`.
+1. Open Suwayomi, install source extensions (e.g. MangaDex, Weeb Central).
+2. Go to Settings > Downloads, set download path to `/manga`.
+3. Connect a reading app using the Suwayomi source plugin pointed at `https://manga-reader.home.<your-domain>:8443`.

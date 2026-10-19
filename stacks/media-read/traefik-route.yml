@@ -8,21 +8,9 @@ http:
       tls: {}
       middlewares:
         - admin-only
-    komga-admin:
-      rule: "Host(`komga.home.<your-domain>`)"
-      service: komga
-      entryPoints:
-        - admin
-      tls: {}
-      middlewares:
-        - admin-only
 
   services:
     suwayomi:
       loadBalancer:
         servers:
           - url: "http://<server-ip>:4567"
-    komga:
-      loadBalancer:
-        servers:
-          - url: "http://<server-ip>:25600"
