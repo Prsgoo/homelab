@@ -1,6 +1,6 @@
 ---
 title: FileBrowser
-updated: 2026-09-12
+updated: 2026-10-19
 ---
 
 # FileBrowser
@@ -13,7 +13,8 @@ LXC: [management lxc](../../lxcs/management-lxc.md) (CT 100) - web-based file ma
 |---------|-------|
 | Port | 8082 |
 | Root | `/data/` (full `$DATA_ROOT/` pool) |
-| Database | `/data/config/management/filebrowser/filebrowser.db` |
+| Database | `/data/config/management/filebrowser/database/filebrowser.sqlite` |
+| Config | `/data/config/management/filebrowser/config/config.yaml` |
 | URL | `https://files.home.<your-domain>:<admin-port>` |
 | Managed as | Komodo stack `filebrowser` |
 

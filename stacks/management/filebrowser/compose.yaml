@@ -7,8 +7,10 @@ services:
     ports:
       - 8082:80
     environment:
-      - FILEBROWSER_DATABASE=${FILEBROWSER_DATABASE}
+      - FILEBROWSER_DATABASE_PATH=${FILEBROWSER_DATABASE_PATH}
+      - FILEBROWSER_CONFIG=${FILEBROWSER_CONFIG}
     volumes:
       - /data:/srv
-      - /data/config/management/filebrowser:/database
+      - /data/config/management/filebrowser/database:/database
+      - /data/config/management/filebrowser/config:/config
       - /minecraft:/srv/minecraft-pool
