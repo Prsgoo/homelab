@@ -43,7 +43,7 @@ echo "  done"
 echo ""
 echo "=== LXC conf patches ==="
 set_mp $VMID -mp0 $DATA_ROOT/config/media-games,mp=/data
-set_mp $VMID -mp1 $DATA_ROOT/media-stack/games/roms,mp=/roms
+set_mp $VMID -mp1 $DATA_ROOT/media-stack/games,mp=/library
 
 patch_conf $VMID "lxc.idmap" "lxc.idmap: u 0 100000 1000
 lxc.idmap: u 1000 1000 500

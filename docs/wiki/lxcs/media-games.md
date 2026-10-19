@@ -27,9 +27,9 @@ RomM game library stack. Manages ROM files and virtual catalog entries for Steam
 | Mount | Host Path | Container Path |
 |-------|-----------|----------------|
 | mp0 | `$DATA_ROOT/config/media-games` | `/data` |
-| mp1 | `$DATA_ROOT/media-stack/games/roms` | `/roms` |
+| mp1 | `$DATA_ROOT/media-stack/games` | `/library` |
 
-RomM reads ROM files from `/roms` and writes assets/config/cache to `/data/romm/`.
+RomM mounts `/library` as `/romm/library` in the container. RomM expects platform folders at `/romm/library/roms/<platform>/`, which maps to `$DATA_ROOT/media-stack/games/roms/<platform>/` on the host.
 
 ## UID Scheme
 

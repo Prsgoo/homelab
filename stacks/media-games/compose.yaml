@@ -24,7 +24,7 @@ services:
       - /data/romm/assets:/romm/assets
       - /data/romm/config:/romm/config
       - /data/romm/redis:/redis-data
-      - /roms:/romm/library
+      - /library:/romm/library
     ports:
       - "3000:8080"
     depends_on:

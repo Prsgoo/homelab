@@ -9,19 +9,19 @@ updated: 2026-09-13
 
 | CT | Name | IP | rootfs Pool | Alloc | onboot | Notes |
 |----|------|----|-------------|-------|--------|-------|
-| 100 | management | <server-ip> | local-lvm | 8GB | yes | Komodo Core + Traefik + Glance + FileBrowser |
-| 101 | pihole | <server-ip> | local-lvm | 4GB | yes | Pi-hole + Unbound - DNS + ad blocking |
-| 200 | ultrafeeder | <server-ip> | local-lvm | 8GB | yes | ADS-B feeder stack (ultrafeeder + piaware + fr24) |
-| 201 | iot | <server-ip> | local-lvm | 8GB | yes | IoT automation (homebridge, zigbee2mqtt, mosquitto) |
-| 202 | monitoring | <server-ip> | local-lvm | 8GB | yes | Grafana + Prometheus + pve-exporter |
-| 300 | media-arr | <server-ip> | local-lvm | 12GB | yes | Sonarr, Radarr, Prowlarr, Bazarr, Seerr, Flaresolverr, Unpackerr, Recyclarr, Dispatcharr |
-| 301 | media-server | <server-ip> | local-lvm | 8GB | yes | Jellyfin + Jellystat media server stack |
-| 302 | media-dl | <server-ip> | local-lvm | 8GB | yes | qBittorrent + SABnzbd |
-| 303 | media-read | <server-ip> | local-lvm | 8GB | yes | Manga reading stack: Suwayomi |
-| 304 | games | <server-ip> | local-lvm | 8GB | yes | RomM game library + MariaDB |
-| 400 | game-panel | <server-ip> | local-lvm | 8GB | no | Pterodactyl panel + MariaDB - on-demand, start manually |
-| 401 | minecraft-wings | <server-ip> | local-lvm | 16GB | no | Pterodactyl Wings + Docker - on-demand, start manually |
-| 600 | personal-apps | <server-ip> | local-lvm | 8GB | yes | Personal apps: Actual Budget, Mealie, FreshRSS, Grimmory |
+| 100 | management | 192.168.50.100 | local-lvm | 8GB | yes | Komodo Core + Traefik + Glance + FileBrowser |
+| 101 | pihole | 192.168.50.101 | local-lvm | 4GB | yes | Pi-hole + Unbound - DNS + ad blocking |
+| 200 | ultrafeeder | 192.168.50.200 | local-lvm | 8GB | yes | ADS-B feeder stack (ultrafeeder + piaware + fr24) |
+| 201 | iot | 192.168.50.201 | local-lvm | 8GB | yes | IoT automation (homebridge, zigbee2mqtt, mosquitto) |
+| 202 | monitoring | 192.168.50.202 | local-lvm | 8GB | yes | Grafana + Prometheus + pve-exporter |
+| 300 | media-arr | 192.168.50.30 | local-lvm | 12GB | yes | Sonarr, Radarr, Prowlarr, Bazarr, Seerr, Flaresolverr, Unpackerr, Recyclarr, Dispatcharr |
+| 301 | media-server | 192.168.50.31 | local-lvm | 8GB | yes | Jellyfin + Jellystat media server stack |
+| 302 | media-dl | 192.168.50.32 | local-lvm | 8GB | yes | qBittorrent + SABnzbd |
+| 303 | media-read | 192.168.50.33 | local-lvm | 8GB | yes | Manga reading stack: Suwayomi |
+| 304 | games | 192.168.50.34 | local-lvm | 8GB | yes | RomM game library + MariaDB |
+| 400 | game-panel | 192.168.50.40 | local-lvm | 8GB | no | Pterodactyl panel + MariaDB - on-demand, start manually |
+| 401 | minecraft-wings | 192.168.50.41 | local-lvm | 16GB | no | Pterodactyl Wings + Docker - on-demand, start manually |
+| 600 | personal-apps | 192.168.50.60 | local-lvm | 8GB | yes | Personal apps: Actual Budget, Mealie, FreshRSS, Grimmory |
 
 
 ## Mount Points
@@ -45,7 +45,7 @@ updated: 2026-09-13
 | 303 | media-read | mp0 | `$DATA_ROOT/config/media-read` | `/data` |
 | 303 | media-read | mp1 | `$DATA_ROOT/media-stack/media/library/manga` | `/manga` |
 | 304 | games | mp0 | `$DATA_ROOT/config/media-games` | `/data` |
-| 304 | games | mp1 | `$DATA_ROOT/media-stack/games/roms` | `/roms` |
+| 304 | games | mp1 | `$DATA_ROOT/media-stack/games` | `/library` |
 | 400 | game-panel | mp0 | `$DATA_ROOT/config/panel` | `/data` |
 | 401 | minecraft-wings | mp0 | `$DATA_ROOT/config/minecraft-wings` | `/data` |
 | 401 | minecraft-wings | mp1 | `$DATA_ROOT/minecraft/volumes` | `/var/lib/pterodactyl/volumes` |
