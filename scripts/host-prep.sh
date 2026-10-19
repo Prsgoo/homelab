@@ -51,7 +51,7 @@ echo ""
 echo "=== [2/4] Directory tree ==="
 
 # Config dirs - one per LXC
-for dir in management ultrafeeder iot monitoring media-arr media-server media-dl media-read panel minecraft-wings personal-apps; do
+for dir in management ultrafeeder iot monitoring media-arr media-server media-dl media-read media-games panel minecraft-wings personal-apps; do
     mkdir -p "$DATA_ROOT/config/$dir"
 done
 
@@ -59,7 +59,8 @@ done
 for dir in media/tv media/anime media/movies media/movies-4k \
            media/library/books media/library/comics media/library/manga \
            torrents/tv torrents/movies \
-           usenet/complete/tv usenet/complete/movies usenet/incomplete; do
+           usenet/complete/tv usenet/complete/movies usenet/incomplete \
+           games/roms; do
     mkdir -p "$DATA_ROOT/media-stack/$dir"
 done
 
@@ -70,6 +71,7 @@ mkdir -p "$DATA_ROOT/config/media-arr"/{sonarr,radarr,prowlarr,bazarr,seerr,disp
 mkdir -p "$DATA_ROOT/config/media-server/jellyfin"
 mkdir -p "$DATA_ROOT/config/media-dl"/{qbittorrent,sabnzbd}
 mkdir -p "$DATA_ROOT/config/media-read"/{suwayomi,komga,komf}
+mkdir -p "$DATA_ROOT/config/media-games"/{romm/assets,romm/config,romm/redis,mariadb}
 mkdir -p "$DATA_ROOT/config/personal-apps/actual-budget"
 
 # Game server data - Wings bind-mounts these

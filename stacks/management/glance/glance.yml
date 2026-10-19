@@ -1,4 +1,4 @@
-server:
+﻿server:
   port: 8080
 
 theme:
@@ -61,7 +61,7 @@ pages:
 
           - type: dns-stats
             service: pihole-v6
-            url: http://<pihole-ip>
+            url: http://<server-ip>
             password: ${PIHOLE_PASSWORD}
 
       - size: full
@@ -74,14 +74,14 @@ pages:
             allow-insecure: true
             headers:
               Accept: application/json
-              Authorization: PVEAPIToken=<pve-api-token>
+              Authorization: PVEAPIToken=<your-username>@pve!<your-token-name>=${PVE_API_TOKEN}
             template: |
               {{ $updays := div (.JSON.Float "data.uptime") 86400.0 }}
               {{ $swappct := 0.0 }}{{ if gt (.JSON.Float "data.swap.total") 0.0 }}{{ $swappct = mul (div (.JSON.Float "data.swap.used") (.JSON.Float "data.swap.total")) 100.0 }}{{ end }}
               <div class="srow srow2">
                 <div class="stile">
                   <div class="slabel">System</div>
-                  <div class="sval">homelab</div>
+                  <div class="sval"><node-name></div>
                   <div class="ssub" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ .JSON.String "data.kversion" }}</div>
                   <div class="sgfoot"><div class="ssub" style="color:var(--color-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{ .JSON.String "data.pveversion" }}</div></div>
                 </div>
@@ -103,14 +103,14 @@ pages:
             allow-insecure: true
             headers:
               Accept: application/json
-              Authorization: PVEAPIToken=<pve-api-token>
+              Authorization: PVEAPIToken=<your-username>@pve!<your-token-name>=${PVE_API_TOKEN}
             subrequests:
               rrd:
                 url: https://<proxmox-ip>:8006/api2/json/nodes/<node-name>/rrddata?timeframe=hour&cf=AVERAGE
                 allow-insecure: true
                 headers:
                   Accept: application/json
-                  Authorization: PVEAPIToken=<pve-api-token>
+                  Authorization: PVEAPIToken=<your-username>@pve!<your-token-name>=${PVE_API_TOKEN}
             template: |
               {{ $rrd := (.Subrequest "rrd").JSON.Array "data" }}
               {{ $cn := len $rrd }}
@@ -230,7 +230,7 @@ pages:
             allow-insecure: true
             headers:
               Accept: application/json
-              Authorization: PVEAPIToken=<pve-api-token>
+              Authorization: PVEAPIToken=<your-username>@pve!<your-token-name>=${PVE_API_TOKEN}
             template: |
               {{ range (.JSON.Array "data.#(type==\"lxc\")#|#(template==0)#") }}
               {{ $running := eq (.String "status") "running" }}
@@ -329,6 +329,10 @@ pages:
                   - title: Suwayomi
                     url: https://manga-reader.<your-domain>:8443
                     icon: di:suwayomi
+              - links:
+                  - title: RomM
+                    url: https://romm.<your-domain>:8443
+                    icon: di:romm
 
           - type: bookmarks
             title: Personal

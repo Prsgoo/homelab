@@ -28,7 +28,7 @@ GIDs are set to the start of the UID range for that domain, so the numbering is 
 | ---- | ---------------- | -------------------------------------------- | ------------------- |
 | 1200 | `iot`            | IoT service shared data                      | iot (CT 201)        |
 | 1210 | `ultrafeeder`    | ADS-B feeder data (single-service group)     | ultrafeeder (CT 200) only |
-| 1300 | `media`          | Shared media library (movies, TV, downloads) | CT 300 (media-arr), CT 301 (media-server), CT 302 (media-dl), CT 303 (media-read), CT 600 (personal-apps - grimmory) |
+| 1300 | `media`          | Shared media library (movies, TV, downloads) | CT 300 (media-arr), CT 301 (media-server), CT 302 (media-dl), CT 303 (media-read), CT 304 (media-games), CT 600 (personal-apps - grimmory) |
 | 1400 | `gaming`         | Game server data                             | future game LXCs    |
 | 1600 | `personal-apps`  | Personal app config access                   | CT 600 (personal-apps) |
 
@@ -82,6 +82,7 @@ These only need to exist inside their own LXC **and on the host** (required for 
 | 1330 | `suwayomi`    | Suwayomi    | 1300 (`media`) | -            | CT 303 (media-read) - UID unused, see [exceptions](service-uid-exceptions.md) |
 | 1331 | `komga`       | Komga       | 1300 (`media`) | -            | CT 303 (media-read) |
 | 1332 | `komf`        | Komf        | 1300 (`media`) | -            | CT 303 (media-read) |
+| 1340 | `romm`        | RomM        | 1300 (`media`) | -            | CT 304 (media-games) - reserved; image runs as container root, see [exceptions](service-uid-exceptions.md) |
 | 1001 | `actual-budget` | Actual Budget | private (1001)         | -          | CT 600 (personal-apps) - UID hardcoded in image, see [exceptions](service-uid-exceptions.md) |
 | 1600 | `grimmory`      | Grimmory      | 1600 (`personal-apps`) | 1300 (`media`) | CT 600 (personal-apps) |
 | 1601 | `grocy`         | Grocy         | 1600 (`personal-apps`) | -          | CT 600 (personal-apps) |
@@ -152,6 +153,10 @@ What you control at the OS level:
 | `$DATA_ROOT/config/media-read/suwayomi/` | `1000:1300` | 750 | suwayomi (hardcoded UID 1000, see exceptions) |
 | `$DATA_ROOT/config/media-read/komga/` | `1331:1300` | 750 | komga only |
 | `$DATA_ROOT/config/media-read/komf/` | `1332:1300` | 750 | komf only |
+| `$DATA_ROOT/config/media-games/` | `100000:1300` | 750 | container root traversal + media group |
+| `$DATA_ROOT/config/media-games/romm/` | `100000:1300` | 750 | romm (runs as container root) |
+| `$DATA_ROOT/config/media-games/mariadb/` | `100999:100999` | 750 | mariadb (UID 999 → host 100999) |
+| `$DATA_ROOT/media-stack/games/roms/` | `root:1300` | 775 | all media group members |
 | `$DATA_ROOT/config/personal-apps/actual-budget/` | `1001:1001` | 750 | actual-budget (hardcoded UID 1001) |
 | `$DATA_ROOT/config/personal-apps/mealie/` | `100911:100911` | 750 | mealie (internal mealie user UID 911 → host 100911) |
 | `$DATA_ROOT/config/personal-apps/grocy/` | `1601:1600` | 750 | grocy only |

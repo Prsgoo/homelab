@@ -35,6 +35,9 @@ chown 1332:1300   $DATA_ROOT/config/media-read/komf     && chmod 750 $DATA_ROOT/
 # Manga dir - idempotent, owned by media group; also set by ct600
 chown root:1300 $DATA_ROOT/media-stack/media/library/manga
 chmod 775       $DATA_ROOT/media-stack/media/library/manga
+
+# FileBrowser (CT 100) runs as container root = host UID 100000 - needs ACL access
+setfacl -Rm u:100000:rwx,d:u:100000:rwx $DATA_ROOT/config/media-read
 echo "  done"
 
 echo ""
