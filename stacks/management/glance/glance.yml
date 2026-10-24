@@ -325,14 +325,38 @@ pages:
                   - title: SABnzbd
                     url: https://sabnzbd.<your-domain>:8443
                     icon: di:sabnzbd
+
+          - type: bookmarks
+            title: Read
+            groups:
               - links:
                   - title: Suwayomi
                     url: https://manga-reader.<your-domain>:8443
                     icon: di:suwayomi
               - links:
+                  - title: Grimmory
+                    url: https://grimmory.<your-domain>:8443
+                    icon: https://cdn.jsdelivr.net/gh/selfhst/icons/svg/grimmory.svg
+
+          - type: bookmarks
+            title: Games
+            groups:
+              - links:
+                  - title: Game Panel
+                    url: https://game-panel.<your-domain>
+                    icon: di:pterodactyl
+              - links:
                   - title: RomM
                     url: https://romm.<your-domain>:8443
                     icon: di:romm
+              - links:
+                  - title: Completionist.me
+                    url: https://completionist.me
+                    icon: si:steam
+              - links:
+                  - title: SteamVault
+                    url: https://steamvault.dev
+                    icon: si:steam
 
           - type: bookmarks
             title: Personal
@@ -349,13 +373,9 @@ pages:
                   - title: FreshRSS
                     url: https://freshrss.<your-domain>:8443
                     icon: di:freshrss
-              - links:
-                  - title: Grimmory
-                    url: https://grimmory.<your-domain>:8443
-                    icon: di:grimmory
 
           - type: bookmarks
-            title: IoT & Gaming
+            title: IoT
             groups:
               - links:
                   - title: Homebridge
@@ -365,10 +385,6 @@ pages:
                   - title: Zigbee2MQTT
                     url: https://zigbee.<your-domain>:8443
                     icon: di:zigbee2mqtt
-              - links:
-                  - title: Game Panel
-                    url: https://game-panel.<your-domain>
-                    icon: di:pterodactyl
 
           - type: bookmarks
             title: ADS-B
