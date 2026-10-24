@@ -13,3 +13,4 @@ LXC: [management lxc](../../lxcs/management-lxc.md)
 | Glance | [glance](glance.md) |
 | FileBrowser | [filebrowser](filebrowser.md) |
 | Cloudflared | parked - see [cloudflare tunnel](../../infrastructure/cloudflare-tunnel.md) |
+| WARP Proxy | [warp-proxy](warp-proxy.md) |
